@@ -19,19 +19,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var currentLevel: Int = 0
     var touchSpot: SKSpriteNode!
+    //var tile: TileNode!
+  
     
     override func didMoveToView(view: SKView) {
         
         physicsWorld.contactDelegate = self
-       // view.showsPhysics = true
+        //view.showsPhysics = true
 
-        enumerateChildNodesWithName("hex") {node, _ in
-            let aHex = node as! HexNode
-            aHex.setUp()
+        
+        enumerateChildNodesWithName("//tile_body") {node, _ in
+            let aTile = node as! TileNode
+            aTile.setUp()
             
         }
-        
-        
+
         touchSpot = childNodeWithName("touchSpot") as! SKSpriteNode
         let touchSpotTexture = (touchSpot.texture)
         touchSpot.physicsBody = SKPhysicsBody(texture: touchSpotTexture!, size: touchSpotTexture!.size())
@@ -40,7 +42,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.None
         touchSpot.physicsBody!.collisionBitMask = PhysicsCategory.None
         
-
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -54,6 +55,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.None
+        enumerateChildNodesWithName("//tile_body") {node, _ in
+            let aTile = node as! TileNode
+            aTile.lock()
+            
+        }
 
     }
     
@@ -62,7 +68,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             touchSpot.position = touch.locationInNode(self)
         }
 
-        
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -71,11 +76,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let thisHex = (contact.bodyA.categoryBitMask == PhysicsCategory.Hex) ?
                 contact.bodyA.node :
                 contact.bodyB.node
-            if let aHex = thisHex as? HexNode {
-                aHex.changeSomething()
-            }
+             if let aTile = thisHex as? TileNode{
+                aTile.changeSomething()
 
-            
+            }
+   
         }
 
     }
@@ -86,9 +91,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let thisHex = (contact.bodyA.categoryBitMask == PhysicsCategory.Hex) ?
                 contact.bodyA.node :
                 contact.bodyB.node
-            if let aHex = thisHex as? HexNode {
-                aHex.unChangeSomething()
+             if let aTile = thisHex as? TileNode{
+                aTile.unChangeSomething()
             }
+
             
         }
 
