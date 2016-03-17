@@ -13,15 +13,15 @@ import AVFoundation
 
 class TileNode: SKSpriteNode {
     
-    var fingerTexture = SKSpriteNode(imageNamed: "fingerTexture")
-    var edgeTexture = SKSpriteNode(imageNamed: "hexEdge")
+    var fingerTexture = SKSpriteNode(imageNamed: "HexFinger_00000")
+    var edgeTexture = SKSpriteNode(imageNamed: "HexBody_00000")
 
     var touched = false
     
     
      func setUp(){
         touched = false
-        let hexBodyTexture = SKTexture(imageNamed: "hexBody")
+        let hexBodyTexture = SKTexture(imageNamed: "HexBody_00000")
         physicsBody = SKPhysicsBody(texture: hexBodyTexture, size: hexBodyTexture.size())
         physicsBody?.affectedByGravity = false
         physicsBody?.pinned = true
@@ -29,38 +29,45 @@ class TileNode: SKSpriteNode {
         physicsBody?.categoryBitMask = PhysicsCategory.Hex
         physicsBody?.collisionBitMask = PhysicsCategory.None
         
+        
         fingerTexture = childNodeWithName("fingerPrint") as! SKSpriteNode
 
         fingerTexture.zPosition = 2
         fingerTexture.alpha = 0
         fingerTexture.blendMode = SKBlendMode.Screen
         fingerTexture.name = "fingerTexture"
+        
      
         edgeTexture = childNodeWithName("edge") as! SKSpriteNode
         edgeTexture.alpha = 0
         edgeTexture.zPosition = 2
         edgeTexture.blendMode = SKBlendMode.Add
         edgeTexture.name = "edge"
+        edgeTexture.runAction(SKAction.colorizeWithColor(UIColor.orangeColor(), colorBlendFactor: 1.0, duration: 0.1))
         
-        let changeColorAction = SKAction.colorizeWithColor(SKColor.greenColor(), colorBlendFactor: 1.0, duration: 0.5)
-        edgeTexture.runAction(changeColorAction)
-
-    
-    
+        
 
     }
     
-    func changeSomething(){
+    func changeSomething(correct: Bool){
         if (!touched){
+            if correct {
+                touched = true
+                let lockDownAction = SKAction.sequence([SKAction.scaleTo(0.95, duration: 0.5), SKAction.scaleTo(1.0, duration: 0.5)])
+                let blurAction = SKAction(named: "blur")!
+                //
+                fingerTexture.runAction(blurAction)
+                fingerTexture.runAction(SKAction.sequence([SKAction.fadeAlphaTo(1.0, duration: 0.7),SKAction.waitForDuration(0.5),SKAction.fadeAlphaTo(0.0, duration: 2.0)]))
+                
+                runAction(lockDownAction)
+                runAction(SKAction.colorizeWithColor(UIColor.orangeColor(), colorBlendFactor: 1.0, duration: 0.5))
+                
+            }else{
+                //run other action
+                touched = true
+                runAction(SKAction.colorizeWithColor(UIColor.redColor(), colorBlendFactor: 1.0, duration: 0.3))
+            }
             
-            touched = true
-            
-            let lockDownAction = SKAction.sequence([SKAction.scaleTo(0.95, duration: 1.0), SKAction.scaleTo(1.0, duration: 1.0)])
-            //let edgeUpAction = SKAction.runAction(SKAction.fadeAlphaTo(0.5, duration: 0.5), onChildWithName: "edge")
-            fingerTexture.runAction(SKAction.sequence([SKAction.fadeAlphaTo(1.0, duration: 1.0),SKAction.waitForDuration(1.5)]))
-            let groupAction = SKAction.group([lockDownAction,SKAction.rotateByAngle(1.0472, duration: 2.0)])
- 
-            runAction(groupAction)
         }
     }
     
@@ -71,19 +78,27 @@ class TileNode: SKSpriteNode {
     }
     
     func lock(){
+        
         touched = true
-        let flipAction1 = SKAction.scaleXTo(0.0, y: 1.0, duration: 0.75)
-        flipAction1.timingMode = SKActionTimingMode.EaseInEaseOut
-        let flipAction2 = SKAction.scaleXTo(1.0, y: 1.0, duration: 0.75)
-        flipAction2.timingMode = SKActionTimingMode.EaseInEaseOut
+
         
+        let edgeDownAction = SKAction.runAction(SKAction.fadeAlphaTo(0.0, duration: 0.5), onChildWithName: "edge")
+        //let fingerAction = SKAction.runAction(SKAction.fadeAlphaTo(0.0, duration: 0.2), onChildWithName: "fingerTexture")
+        runAction(edgeDownAction)
+        let colorAction = SKAction.colorizeWithColor(UIColor.orangeColor(), colorBlendFactor: 0.0, duration: 0.1)
         
-        let fingerAction = SKAction.runAction(SKAction.fadeAlphaTo(0.0, duration: 0.5), onChildWithName: "fingerTexture")
-      //  let edgeDownAction = SKAction.runAction(SKAction.fadeAlphaTo(0.0, duration: 0.2), onChildWithName: "edge")
-        
-        
-        runAction(SKAction.sequence([SKAction.waitForDuration(2.0), fingerAction, flipAction1, flipAction2, SKAction.runBlock(self.reset)]))
+        //runAction(SKAction.rotateByAngle(1.0472, duration: 1.0))
+        runAction(SKAction.group([SKAction(named: "flip")!,colorAction, SKAction.runBlock(self.reset)]))
      
+    }
+    
+    func lightUp(){
+        let changeColorAction = SKAction.colorizeWithColor(SKColor.greenColor(), colorBlendFactor: 1.0, duration: 0.2)
+        edgeTexture.runAction(changeColorAction)
+        runAction(changeColorAction)
+
+        let edgeUpAction = SKAction.runAction(SKAction.fadeAlphaTo(0.5, duration: 0.5), onChildWithName: "edge")
+        runAction(edgeUpAction)
     }
     
     func reset(){

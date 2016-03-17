@@ -15,18 +15,32 @@ struct PhysicsCategory {
     static let Hex: UInt32 = 0b10 // 2
 }
 
+
+struct GameState {
+    static let watching = 0
+    static let drawing = 1
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var currentLevel: Int = 0
     var touchSpot: SKSpriteNode!
-    //var tile: TileNode!
-  
+    var hexArray: NSMutableArray = []
+    var hexNumber: Int = 0
+    var state: Int!
+    var text: SKSpriteNode!
+    var wrongStep: Int = 0
     
     override func didMoveToView(view: SKView) {
         
+        state = GameState.watching
+        hexNumber = 0
         physicsWorld.contactDelegate = self
         //view.showsPhysics = true
+   
 
+        text = childNodeWithName("text") as! SKSpriteNode
+        text.runAction(SKAction.fadeAlphaTo(0.7, duration: 0.01))
         
         enumerateChildNodesWithName("//tile_body") {node, _ in
             let aTile = node as! TileNode
@@ -41,26 +55,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         touchSpot.physicsBody!.categoryBitMask = PhysicsCategory.Spot
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.None
         touchSpot.physicsBody!.collisionBitMask = PhysicsCategory.None
+        touchSpot.hidden = true
         
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.Hex
         spotLocation(touches)
+
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         spotLocation(touches)
+        
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        userInteractionEnabled = false
+        
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.None
-        enumerateChildNodesWithName("//tile_body") {node, _ in
-            let aTile = node as! TileNode
-            aTile.lock()
-            
-        }
-
+        runAction(SKAction.sequence([SKAction.waitForDuration(1.5),SKAction.runBlock(changeState)]))
+ 
     }
     
      func spotLocation(touches: Set<UITouch>) {
@@ -76,9 +91,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let thisHex = (contact.bodyA.categoryBitMask == PhysicsCategory.Hex) ?
                 contact.bodyA.node :
                 contact.bodyB.node
-             if let aTile = thisHex as? TileNode{
-                aTile.changeSomething()
+            
+            if let aTile = thisHex as? TileNode{
+                if state == GameState.watching && !aTile.touched{
+                    aTile.changeSomething(true)
+                    hexArray.addObject(aTile)
+                    print("hex count \(hexArray.count)")
+                    
+                    
+                }
 
+                if state == GameState.drawing && !aTile.touched{
+                    if aTile == hexArray.objectAtIndex(hexNumber) as! TileNode{
+                        aTile.changeSomething(true)
+                        print("right tile")
+                    
+                        if hexNumber < (hexArray.count - 1){
+                            hexNumber = hexNumber + 1
+        
+                        }
+                        else if hexNumber == (hexArray.count - 1){
+                            print("YOU WON !!!!!")
+                            runAction(SKAction.sequence([SKAction.waitForDuration(0.7), SKAction.runBlock(winGame)]))
+                        }
+                        
+                    }else{
+                        aTile.changeSomething(false)
+                        if wrongStep < 1{
+                            wrongStep++
+                            print("WRONG")
+                            
+
+                        }else{
+                            print("You LOSE")
+                            userInteractionEnabled = false
+                            runAction(SKAction.sequence([SKAction.waitForDuration(0.7), SKAction.runBlock(loseGame)]))
+                        }
+                        
+                    }
+                    
+                }
+  
             }
    
         }
@@ -91,15 +144,57 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let thisHex = (contact.bodyA.categoryBitMask == PhysicsCategory.Hex) ?
                 contact.bodyA.node :
                 contact.bodyB.node
-             if let aTile = thisHex as? TileNode{
+            if let aTile = thisHex as? TileNode{
                 aTile.unChangeSomething()
             }
 
+        }
+
+    }
+    
+    func changeState(){
+        userInteractionEnabled = true
+        enumerateChildNodesWithName("//tile_body") {node, _ in
+            let aTile = node as! TileNode
+            aTile.lock()
+            
+        }
+
+        
+        if state == GameState.drawing{
+            state = GameState.watching
+            text.texture = SKTexture(imageNamed: "Text Comp_00000")//watching
+            hexArray = []
+            hexNumber = 0
+        }
+        else if state == GameState.watching{
+            state = GameState.drawing
+            text.texture = SKTexture(imageNamed: "Text Comp_00001")//drawing
             
         }
 
     }
     
+    func winGame(){
+        for var i = 0; i < hexArray.count; ++i{
+            let aTile = hexArray.objectAtIndex(i) as! TileNode
+            aTile.lightUp()
+            
+        }
+        
+        
+        text.texture = SKTexture(imageNamed: "Text Comp_00002")
+        wrongStep = 0
+    }
+    
+    func loseGame(){
+        enumerateChildNodesWithName("//tile_body") {node, _ in
+            let aTile = node as! TileNode
+            aTile.changeSomething(false)
+        }
+        text.texture = SKTexture(imageNamed: "Text Comp_00003")//wrong
+        wrongStep = 0
+    }
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
