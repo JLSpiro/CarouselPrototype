@@ -82,25 +82,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.tilePosArrayA.addObject(aTile)
         }
 
-        for var i = 0; i <= 4; i += 1{
+        for i in 0..<5 {
             let aTile = childNodeWithName("tileA\(i)") as SKNode!
             self.tilePosArrayA.addObject(aTile)
         }
         
-        for var i = 0; i <= 5; i += 1{
+        for i in 0..<5 {
             let aTile = childNodeWithName("tileB\(i)") as SKNode!
             self.tilePosArrayB.addObject(aTile)
         }
         
-        for var i = 0; i <= 6; i += 1{
+        for i in 0..<6 {
             let aTile = childNodeWithName("tileC\(i)") as SKNode!
             self.tilePosArrayC.addObject(aTile)
         }
-        for var i = 0; i <= 5; i += 1{
+        for i in 0..<5 {
             let aTile = childNodeWithName("tileD\(i)") as SKNode!
             self.tilePosArrayD.addObject(aTile)
         }
-        for var i = 0; i <= 4; i += 1{
+        for i in 0..<4 {
             let aTile = childNodeWithName("tileE\(i)") as SKNode!
             self.tilePosArrayE.addObject(aTile)
         }
@@ -133,7 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         randomSequence = []
         let randomTile = generateRandomTile()
         randomSequence.addObject(randomTile)
-        for var i = 0; i < 5; ++i {
+        for i in 0..<5 {
             let nextTile = tileStep()
             randomSequence.addObject(nextTile)
         }
@@ -239,7 +239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }else{
                         aTile.changeSomething(false)
                         if wrongStep < 1{
-                            wrongStep++
+                            wrongStep += 1
                             
 
                         }else{
@@ -325,7 +325,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func winGame(){
-        for var i = 0; i < hexArray.count; ++i{
+        let hexCount = hexArray.count
+        for i in 0..<hexCount {
             let aTile = hexArray.objectAtIndex(i) as! TileNode
             aTile.lightUp()
             
