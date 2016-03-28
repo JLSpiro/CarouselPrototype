@@ -133,7 +133,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         randomSequence = []
         let randomTile = generateRandomTile()
         randomSequence.addObject(randomTile)
-        for i in 0..<5 {
+        for _ in 0..<5 {
             let nextTile = tileStep()
             randomSequence.addObject(nextTile)
         }
