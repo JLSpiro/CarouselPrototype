@@ -8,6 +8,7 @@
 
 import SpriteKit
 import Foundation
+import AudioKit
 
 
 
@@ -61,6 +62,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lastRandNum: Int!
     
     override func didMoveToView(view: SKView) {
+        
+        var music: SKAudioNode!
+        music = SKAudioNode(fileNamed: "Audio/Music/feedback wash with reverb.aiff")
+        self.addChild(music)
         
         state = GameState.watching
         hexNumber = 0
