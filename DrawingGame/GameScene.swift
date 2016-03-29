@@ -90,25 +90,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.tilePosArrayA.addObject(aTile)
         }
 
-        for i in 0..<5 {
+        for i in 0...4 {
             let aTile = childNodeWithName("tileA\(i)") as SKNode!
             self.tilePosArrayA.addObject(aTile)
         }
         
-        for i in 0..<5 {
+        for i in 0...5 {
             let aTile = childNodeWithName("tileB\(i)") as SKNode!
             self.tilePosArrayB.addObject(aTile)
         }
         
-        for i in 0..<6 {
+        for i in 0...6 {
             let aTile = childNodeWithName("tileC\(i)") as SKNode!
             self.tilePosArrayC.addObject(aTile)
         }
-        for i in 0..<5 {
+        for i in 0...5 {
             let aTile = childNodeWithName("tileD\(i)") as SKNode!
             self.tilePosArrayD.addObject(aTile)
         }
-        for i in 0..<4 {
+        for i in 0...4 {
             let aTile = childNodeWithName("tileE\(i)") as SKNode!
             self.tilePosArrayE.addObject(aTile)
         }
