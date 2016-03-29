@@ -63,9 +63,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         
-        var music: SKAudioNode!
-        music = SKAudioNode(fileNamed: "Audio/Music/feedback wash with reverb.aiff")
-        self.addChild(music)
+        let bundle = NSBundle.mainBundle()
+        let music = bundle.pathForResource("feedback wash with reverb", ofType: "aiff")
+        let player = AKAudioPlayer(music!)
+        AudioKit.output = player
+        AudioKit.start()
+        player.play()
         
         state = GameState.watching
         hexNumber = 0
