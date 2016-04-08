@@ -35,6 +35,9 @@ struct Direction {
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    static let UP = 1
+    static let DOWN = 0
+
 
     var currentLevel: Int = 0
     var touchSpot: SKSpriteNode!
@@ -45,6 +48,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var wrongStep: Int = 0
     var hand: SKSpriteNode!
     var wiper: SKSpriteNode!
+    var eyeLeft: SKSpriteNode!
+    var eyeRight: SKSpriteNode!
     
     var tilePosArrayA: NSMutableArray = []
     var tilePosArrayB: NSMutableArray = []
@@ -55,6 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var currentColumn: Int!
     var currentRow: Int!
+    var lastColumn: Int!
     
     var handPos: CGPoint = CGPointZero
     var randomSequence: NSMutableArray = []
@@ -82,25 +88,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.tilePosArrayA.addObject(aTile)
         }
 
-        for var i = 0; i <= 4; ++i{
+        for i in 0...4{
             let aTile = childNodeWithName("tileA\(i)") as SKNode!
             self.tilePosArrayA.addObject(aTile)
         }
         
-        for var i = 0; i <= 5; ++i{
+        for i in 0...5{
             let aTile = childNodeWithName("tileB\(i)") as SKNode!
             self.tilePosArrayB.addObject(aTile)
         }
         
-        for var i = 0; i <= 6; ++i{
+        for i in 0...6{
             let aTile = childNodeWithName("tileC\(i)") as SKNode!
             self.tilePosArrayC.addObject(aTile)
         }
-        for var i = 0; i <= 5; ++i{
+        for i in 0...5{
             let aTile = childNodeWithName("tileD\(i)") as SKNode!
             self.tilePosArrayD.addObject(aTile)
         }
-        for var i = 0; i <= 4; ++i{
+        for i in 0...4{
             let aTile = childNodeWithName("tileE\(i)") as SKNode!
             self.tilePosArrayE.addObject(aTile)
         }
@@ -112,6 +118,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hand.runAction(SKAction.repeatActionForever(SKAction(named: "handWait")!),withKey: "handWait" )
         handPos = hand.position
         hand.runAction(SKAction.fadeAlphaTo(0.7, duration: 0.1))
+      //  hand.color = SKColor.blueColor()
+      //  hand.colorBlendFactor = 0.2
+        
+        eyeLeft = childNodeWithName("eyeLeft") as! SKSpriteNode
+        eyeRight = childNodeWithName("eyeRight") as! SKSpriteNode
 
         touchSpot = childNodeWithName("touchSpot") as! SKSpriteNode
         let touchSpotTexture = (touchSpot.texture)
@@ -126,6 +137,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         generateSequence()
         runAction(SKAction.sequence([SKAction.waitForDuration(1.5),SKAction.runBlock(handMove)]))
+        eyeRight.runAction(SKAction(named: "lookUp")!)
+        eyeLeft.runAction(SKAction(named: "lookUp")!)
     }
     
     func generateSequence() {
@@ -133,12 +146,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         randomSequence = []
         let randomTile = generateRandomTile()
         randomSequence.addObject(randomTile)
-        for var i = 0; i < 5; ++i {
-            let nextTile = tileStep()
-            randomSequence.addObject(nextTile)
-        }
         
-    }
+        for i in 0...4 {
+            let nextTile = tileStep()
+            for n in 0...(randomSequence.count - 1){
+                if nextTile == randomSequence.objectAtIndex(n) as! NSObject{
+                    
+                }
+            }
+            
+            randomSequence.addObject(nextTile)
+            
+        }
+     }
     
     func generateRandomTile() -> SKNode{
         let randNum = Int(arc4random_uniform(4))
@@ -154,6 +174,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func tileStep() -> SKNode{
         
+ 
+        lastColumn = currentColumn
         let randNum = Int(arc4random_uniform(3))
         if randNum < 1 && currentColumn > 0 {
             currentColumn = currentColumn - 1
@@ -164,15 +186,67 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let randRow = Int(arc4random_uniform(2))
         
+
         if randRow == 0 && currentRow > 0 {
             currentRow = currentRow - 1
         }
         else if randRow == 1 && currentRow < (totalTileArray.objectAtIndex(currentColumn).count - 1){
             currentRow = currentRow + 1
         }
+
+/*
+  //must account for staggered hexes!
         
-        print("\(totalTileArray.objectAtIndex(currentColumn).count - 1)")
+        if currentColumn < lastColumn && lastColumn <= 2 { //on the left and moving left
+            if randRow == 0 && currentRow > 0 {
+                currentRow = currentRow - 1
+            }
+            else if randRow == 1 && currentRow < (totalTileArray.objectAtIndex(currentColumn).count - 1){
+                currentRow = currentRow + 0
+            }
+
+        }
+        if currentColumn > lastColumn && lastColumn >= 2 {//on the right and moving right
+            if randRow == 0 && currentRow > 0 {
+                currentRow = currentRow - 1
+            }
+            else if randRow == 1 && currentRow < (totalTileArray.objectAtIndex(currentColumn).count - 1){
+                currentRow = currentRow + 0
+            }
+
+        }
         
+        if currentColumn < lastColumn && lastColumn >= 2 {//on the right and moving left
+            if randRow == 0 && currentRow > 0 {
+                currentRow = currentRow - 0
+            }
+            else if randRow == 1 && currentRow < (totalTileArray.objectAtIndex(currentColumn).count - 1){
+                currentRow = currentRow + 1
+            }
+            
+        }
+            
+        if currentColumn > lastColumn && lastColumn <= 2 {//on the left and moving right
+            if randRow == 0 && currentRow > 0 {
+                currentRow = currentRow - 0
+            }
+            else if randRow == 1 && currentRow < (totalTileArray.objectAtIndex(currentColumn).count - 1){
+                currentRow = currentRow + 1
+            }
+            
+        }
+        
+        if currentColumn == lastColumn {
+            if randRow == 0 && currentRow > 0 {
+                currentRow = currentRow - 1
+            }
+            else if randRow == 1 && currentRow < (totalTileArray.objectAtIndex(currentColumn).count - 1){
+                currentRow = currentRow + 1
+            }
+        }
+
+        print("\(currentRow)")
+*/
         let theColumn = totalTileArray.objectAtIndex(currentColumn) as! NSMutableArray
         let tile =  theColumn.objectAtIndex(currentRow) as! SKNode
         return tile
@@ -239,7 +313,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }else{
                         aTile.changeSomething(false)
                         if wrongStep < 1{
-                            wrongStep++
+                            wrongStep += 1
                             
 
                         }else{
@@ -281,15 +355,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func changeState(){
         
-      // wiper.runAction(SKAction.rotateByAngle(6.28319, duration: 4.0))
-     //   wiper.runAction(SKAction.rotateByAngle(3.1415, duration: 4.0))
-
+        //wiper.runAction(SKAction.rotateByAngle(6.28319, duration: 4.0))
+        wiper.runAction(SKAction.rotateByAngle(3.1415, duration: 1.5))
+/*
         enumerateChildNodesWithName("//tileNode") {node, _ in
            let aTile = node as! TileNode
             aTile.lock()
 
         }
-
+*/
     //watching
         if state == GameState.drawing{
             userInteractionEnabled = false
@@ -302,6 +376,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 aTile.fadeDown()
                 
             }
+            eyeRight.runAction(SKAction(named: "lookUp")!)
+            eyeLeft.runAction(SKAction(named: "lookUp")!)
 
             generateSequence()
             runAction(SKAction.sequence([SKAction.waitForDuration(1.5),SKAction.runBlock(handMove)]))
@@ -311,7 +387,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //drawing
         else if state == GameState.watching{
             state = GameState.drawing
-          //  hand.runAction(SKAction.repeatActionForever(SKAction(named: "handWait")!),withKey: "handWait" )
             userInteractionEnabled = true
             text.texture = SKTexture(imageNamed: "Text Comp_00001")//drawing
             enumerateChildNodesWithName("//tileNode") {node, _ in
@@ -319,13 +394,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 aTile.fadeUp()
                 
             }
+            eyeRight.runAction(SKAction(named: "lookDown")!)
+            eyeLeft.runAction(SKAction(named: "lookDown")!)
+
 
         }
+        
+ 
 
     }
     
     func winGame(){
-        for var i = 0; i < hexArray.count; ++i{
+        for i in 0...(hexArray.count - 1){
             let aTile = hexArray.objectAtIndex(i) as! TileNode
             aTile.lightUp()
             
@@ -367,22 +447,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func handMove(){
-        
-        print("handMove called")
+
         hand.removeActionForKey("handWait")
         let touchAction = SKAction.group([SKAction(named: "handTouch")!,SKAction.fadeAlphaTo(1.0, duration: 0.6),SKAction.moveTo(randomSequence.objectAtIndex(0).position, duration: 1.0)])
-        let firstMove = SKAction.sequence([touchAction,SKAction.runBlock(handTouchSpot)])
+        let firstMove = SKAction.sequence([touchAction,SKAction.runBlock(handTouchSpot),SKAction.runBlock(handPoint)])
         
         let secondMove = SKAction.moveTo(randomSequence.objectAtIndex(1).position, duration: 1.0)
         let thirdMove = SKAction.moveTo(randomSequence.objectAtIndex(2).position, duration: 1.0)
       //  let fourthMove = SKAction.sequence([SKAction.moveTo(randomSequence.objectAtIndex(3).position, duration: 1.0), SKAction.runBlock{(self.handLightTile(3))}])
-        let untouch = SKAction.group([SKAction(named: "handReturn")!,SKAction.fadeAlphaTo(0.7, duration: 0.6), SKAction.moveTo(handPos, duration: 1.0), SKAction.runBlock(changeState)])
+        let untouch = SKAction.group([SKAction.runBlock(handStopPointing), SKAction(named: "handReturn")!,SKAction.fadeAlphaTo(0.5, duration: 0.6), SKAction.moveTo(handPos, duration: 1.0), SKAction.runBlock(changeState)])
         let wait = SKAction.waitForDuration(0.4)
-        let drawingAction = SKAction.sequence([firstMove,wait,secondMove,wait,thirdMove,wait, SKAction.runBlock(handUntouchSpot),untouch])
+        let drawingAction = SKAction.sequence([firstMove,wait,secondMove,wait,thirdMove,wait, SKAction.runBlock(handUntouchSpot),untouch,SKAction.runBlock(handWaitAgain)])
 
         drawingAction.timingMode = SKActionTimingMode.EaseInEaseOut
         hand.runAction(drawingAction)
+
     }
     
+    func handWaitAgain(){
+        hand.runAction(SKAction.repeatActionForever(SKAction(named: "handWait")!),withKey: "handWait" )
+    }
     
+    func handPoint(){
+        hand.runAction(SKAction.repeatActionForever(SKAction(named: "point")!),withKey: "point" )    }
+    
+    func handStopPointing(){
+        hand.removeActionForKey("point")
+    }
  }

@@ -56,19 +56,21 @@ class TileNode: SKSpriteNode {
         if (!touched){
             if correct {
                 touched = true
+                let warpAction = SKAction(named: "warp")!
                 let lockDownAction = SKAction.sequence([SKAction.scaleTo(0.95, duration: 0.5), SKAction.scaleTo(1.0, duration: 0.5)])
                 let blurAction = SKAction(named: "blur")!
                 //
                 fingerTexture.runAction(blurAction)
                 fingerTexture.runAction(SKAction.sequence([SKAction.fadeAlphaTo(1.0, duration: 0.7),SKAction.waitForDuration(0.5),SKAction.fadeAlphaTo(0.0, duration: 2.0)]))
                 
-                tileBody.runAction(lockDownAction)
+                tileBody.runAction(SKAction.group([lockDownAction,warpAction]))
                 tileBody.runAction(SKAction.colorizeWithColor(UIColor.orangeColor(), colorBlendFactor: 1.0, duration: 0.5))
                 
             }else{
                 //run other action
                 touched = true
                 tileBody.runAction(SKAction.colorizeWithColor(UIColor.redColor(), colorBlendFactor: 1.0, duration: 0.3))
+                
             }
             
         }
