@@ -118,8 +118,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hand.runAction(SKAction.repeatActionForever(SKAction(named: "handWait")!),withKey: "handWait" )
         handPos = hand.position
         hand.runAction(SKAction.fadeAlphaTo(0.7, duration: 0.1))
-        hand.color = SKColor.blueColor()
-        hand.colorBlendFactor = 0.2
+      // hand.color = SKColor.blueColor()
+     //   hand.colorBlendFactor = 0.2
         
         eyeLeft = childNodeWithName("eyeLeft") as! SKSpriteNode
         eyeRight = childNodeWithName("eyeRight") as! SKSpriteNode
@@ -166,6 +166,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
         }
+        
+//This is where I get errors every time
+//while true loop sends each tile through testTile() to check against existing array
+        
  /*
         while true {
             let nextTile = tileStep()
@@ -306,6 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         
                     }else{
                         aTile.changeSomething(false)
+                        //aTile.physicsBody?.affectedByGravity = true
                         if wrongStep < 1{
                             wrongStep += 1
                             
@@ -346,6 +351,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             aTile.lock()
 
         }
+        
+        
 
     //watching
         if state == GameState.drawing{

@@ -29,6 +29,8 @@ class TileNode: SKSpriteNode {
         physicsBody?.allowsRotation = false
         physicsBody?.categoryBitMask = PhysicsCategory.Hex
         physicsBody?.collisionBitMask = PhysicsCategory.None
+        
+        
 
         tileBody = childNodeWithName("tile_body") as! SKSpriteNode
         tileBody.runAction(SKAction.fadeAlphaTo(0.7, duration: 0.1))
@@ -47,7 +49,10 @@ class TileNode: SKSpriteNode {
         edgeTexture.blendMode = SKBlendMode.Add
         edgeTexture.name = "edge"
         edgeTexture.runAction(SKAction.colorizeWithColor(UIColor.orangeColor(), colorBlendFactor: 1.0, duration: 0.1))
-        
+     /*
+        let jitterAction = SKAction.sequence([SKAction.moveByX(0, y: 2.0, duration: 0.1), SKAction.moveByX(0, y: -2.0, duration: 0.1) ])
+        runAction(SKAction.repeatActionForever(jitterAction))
+       */ 
         fadeDown()
 
     }
