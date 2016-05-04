@@ -82,12 +82,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             aTile.setUp()
             
         }
-        
+/*
         enumerateChildNodesWithName("tile") {node, _ in
             let aTile = node
             self.tilePosArrayA.addObject(aTile)
         }
-
+*/
         for i in 0...4{
             let aTile = childNodeWithName("tileA\(i)") as SKNode!
             self.tilePosArrayA.addObject(aTile)
