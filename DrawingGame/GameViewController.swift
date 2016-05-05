@@ -28,7 +28,7 @@ class GameViewController: UIViewController {
                 try bkgMusicPlayer = AVAudioPlayer(contentsOfURL: bkgMusicURL)
                 bkgMusicPlayer.prepareToPlay()
                 bkgMusicPlayer.play()
-                bkgMusicPlayer.volume = 0.5
+                bkgMusicPlayer.volume = 0.25
             } catch {
                 print("Error loading bkg music")
             }
