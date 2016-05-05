@@ -67,9 +67,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var randomSequence: NSMutableArray = []
     var lastRandNum: Int!
     
-    var initialTouchSoundPlayer: AVAudioPlayer!
+    var touchSoundPlayer: AVAudioPlayer!
     
     override func didMoveToView(view: SKView) {
+        
+        // player touch makes a nice little sound
+        
+        let pathToTouchSound = NSBundle.mainBundle().pathForResource("wow", ofType: "mp3")
+        if let pathToTouchSound = pathToTouchSound {
+            let touchSoundURL = NSURL(fileURLWithPath: pathToTouchSound)
+            do {
+                try touchSoundPlayer = AVAudioPlayer(contentsOfURL: touchSoundURL)
+                touchSoundPlayer.enableRate = true
+                touchSoundPlayer.rate = 4.0
+                touchSoundPlayer.volume = 1
+                touchSoundPlayer.numberOfLoops = -1
+            } catch {
+                print("Error loading touch sound")
+            }
+        }
+
         state = GameState.watching
         hexNumber = 0
         physicsWorld.contactDelegate = self
@@ -257,11 +274,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.Hex
         spotLocation(touches)
-        playInitialTouchSound()
+        playTouchSound()
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         spotLocation(touches)
+        //playTouchSound()
         
     }
     
@@ -270,24 +288,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.None
         runAction(SKAction.sequence([SKAction.waitForDuration(1.5),SKAction.runBlock(changeState)]))
+        
+        touchSoundPlayer.stop()
  
     }
     
-    func playInitialTouchSound() {
-    
-        // first player touch makes a nice little sound
-        
-        let pathToInitialTouchSound = NSBundle.mainBundle().pathForResource("wow", ofType: "mp3")
-        if let pathToInitialTouchSound = pathToInitialTouchSound {
-            let initTouchURL = NSURL(fileURLWithPath: pathToInitialTouchSound)
-            do {
-                try initialTouchSoundPlayer = AVAudioPlayer(contentsOfURL: initTouchURL)
-                initialTouchSoundPlayer.play()
-                initialTouchSoundPlayer.volume = 1
-            } catch {
-                print("Error loading touch sound")
-            }
-        }
+    func playTouchSound() {
+        touchSoundPlayer.play()
     }
     
      func spotLocation(touches: Set<UITouch>) {
