@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		91E860731CDAD6E200D8B405 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E8606E1CDACBEA00D8B405 /* AVFoundation.framework */; };
+		91E860751CDAD9E800D8B405 /* Crystal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 91E860741CDAD9E800D8B405 /* Crystal.mp3 */; };
 		FF64FB061C91D4070058BFBC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF64FB051C91D4070058BFBC /* Default-568h@2x.png */; };
 		FF9B57D11C6FA9F0008C5090 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B57D01C6FA9F0008C5090 /* AppDelegate.swift */; };
 		FF9B57D31C6FA9F0008C5090 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF9B57D21C6FA9F0008C5090 /* GameScene.sks */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		91E8606E1CDACBEA00D8B405 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		91E860741CDAD9E800D8B405 /* Crystal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Crystal.mp3; sourceTree = "<group>"; };
 		FF64FB051C91D4070058BFBC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		FF9B57CD1C6FA9F0008C5090 /* DrawingGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawingGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9B57D01C6FA9F0008C5090 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -66,6 +68,7 @@
 		FF9B57C41C6FA9F0008C5090 = {
 			isa = PBXGroup;
 			children = (
+				91E860741CDAD9E800D8B405 /* Crystal.mp3 */,
 				91E8606E1CDACBEA00D8B405 /* AVFoundation.framework */,
 				FF64FB051C91D4070058BFBC /* Default-568h@2x.png */,
 				FF9B57CF1C6FA9F0008C5090 /* DrawingGame */,
@@ -161,6 +164,7 @@
 				FF9B57D31C6FA9F0008C5090 /* GameScene.sks in Resources */,
 				FF9B57DF1C6FA9F0008C5090 /* LaunchScreen.storyboard in Resources */,
 				FFA75DED1C91D55000CB5783 /* MyActions.sks in Resources */,
+				91E860751CDAD9E800D8B405 /* Crystal.mp3 in Resources */,
 				FF9B57DC1C6FA9F0008C5090 /* Assets.xcassets in Resources */,
 				FF9DAAB51C88EDAD008FA4AC /* Tile.sks in Resources */,
 				FF64FB061C91D4070058BFBC /* Default-568h@2x.png in Resources */,
