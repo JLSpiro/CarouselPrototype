@@ -71,7 +71,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // guess what this is for ;)
         var bkgMusicPlayer = AVAudioPlayer()
-        var initialTouchSoundPlayer = AVAudioPlayer()
         
         // load up the background music file and start playing
         let pathToBkgMusic = NSBundle.mainBundle().pathForResource("Crystal", ofType:"mp3")
@@ -85,19 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("Error loading bkg music")
             }
         }
-        // first player touch makes a nice little sound
-        let pathToInitialTouchSound = NSBundle.mainBundle().pathForResource("wow", ofType: "mp3")
-        if let pathToInitialTouchSound = pathToInitialTouchSound {
-            let initTouchURL = NSURL(fileURLWithPath: pathToInitialTouchSound)
-            do {
-                try initialTouchSoundPlayer = AVAudioPlayer(contentsOfURL: initTouchURL)
-                initialTouchSoundPlayer.play()
-                initialTouchSoundPlayer.volume = 1
-            } catch {
-                print("Error loading touch sound")
-            }
-        }
-
+        
         
         state = GameState.watching
         hexNumber = 0
@@ -286,6 +273,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.Hex
         spotLocation(touches)
+        
+        
+        // first player touch makes a nice little sound
+        var initialTouchSoundPlayer = AVAudioPlayer()
+        let pathToInitialTouchSound = NSBundle.mainBundle().pathForResource("wow", ofType: "mp3")
+        if let pathToInitialTouchSound = pathToInitialTouchSound {
+            let initTouchURL = NSURL(fileURLWithPath: pathToInitialTouchSound)
+            do {
+                try initialTouchSoundPlayer = AVAudioPlayer(contentsOfURL: initTouchURL)
+                initialTouchSoundPlayer.play()
+                initialTouchSoundPlayer.volume = 1
+            } catch {
+                print("Error loading touch sound")
+            }
+        }
+
         
 
     }
