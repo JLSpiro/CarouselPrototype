@@ -67,25 +67,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var randomSequence: NSMutableArray = []
     var lastRandNum: Int!
     
+    var initialTouchSoundPlayer: AVAudioPlayer!
+    
     override func didMoveToView(view: SKView) {
-        
-        // guess what this is for ;)
-        var bkgMusicPlayer = AVAudioPlayer()
-        
-        // load up the background music file and start playing
-        let pathToBkgMusic = NSBundle.mainBundle().pathForResource("Crystal", ofType:"mp3")
-        if let pathToBkgMusic = pathToBkgMusic {
-            let bkgMusicURL = NSURL(fileURLWithPath: pathToBkgMusic)
-            do {
-                try bkgMusicPlayer = AVAudioPlayer(contentsOfURL: bkgMusicURL)
-                bkgMusicPlayer.play()
-                bkgMusicPlayer.volume = 1
-            } catch {
-                print("Error loading bkg music")
-            }
-        }
-        
-        
         state = GameState.watching
         hexNumber = 0
         physicsWorld.contactDelegate = self
@@ -273,24 +257,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.Hex
         spotLocation(touches)
-        
-        
-        // first player touch makes a nice little sound
-        var initialTouchSoundPlayer = AVAudioPlayer()
-        let pathToInitialTouchSound = NSBundle.mainBundle().pathForResource("wow", ofType: "mp3")
-        if let pathToInitialTouchSound = pathToInitialTouchSound {
-            let initTouchURL = NSURL(fileURLWithPath: pathToInitialTouchSound)
-            do {
-                try initialTouchSoundPlayer = AVAudioPlayer(contentsOfURL: initTouchURL)
-                initialTouchSoundPlayer.play()
-                initialTouchSoundPlayer.volume = 1
-            } catch {
-                print("Error loading touch sound")
-            }
-        }
-
-        
-
+        playInitialTouchSound()
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -304,6 +271,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.None
         runAction(SKAction.sequence([SKAction.waitForDuration(1.5),SKAction.runBlock(changeState)]))
  
+    }
+    
+    func playInitialTouchSound() {
+    
+        // first player touch makes a nice little sound
+        
+        let pathToInitialTouchSound = NSBundle.mainBundle().pathForResource("wow", ofType: "mp3")
+        if let pathToInitialTouchSound = pathToInitialTouchSound {
+            let initTouchURL = NSURL(fileURLWithPath: pathToInitialTouchSound)
+            do {
+                try initialTouchSoundPlayer = AVAudioPlayer(contentsOfURL: initTouchURL)
+                initialTouchSoundPlayer.play()
+                initialTouchSoundPlayer.volume = 1
+            } catch {
+                print("Error loading touch sound")
+            }
+        }
     }
     
      func spotLocation(touches: Set<UITouch>) {
