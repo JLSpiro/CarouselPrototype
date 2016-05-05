@@ -8,32 +8,15 @@
 
 import UIKit
 import SpriteKit
-import AVFoundation
 
 class GameViewController: UIViewController {
     
-    // guess what this is for ;)
-    var bkgMusicPlayer = AVAudioPlayer()
+       
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        // load up the background music file and start playing
-        let pathToBkgMusic = NSBundle.mainBundle().pathForResource("Crystal", ofType:"mp3")
-        if let pathToBkgMusic = pathToBkgMusic {
-            let bkgMusicURL = NSURL(fileURLWithPath: pathToBkgMusic)
-            do {
-                try bkgMusicPlayer = AVAudioPlayer(contentsOfURL: bkgMusicURL)
-                bkgMusicPlayer.play()
-                bkgMusicPlayer.volume = 1
-            } catch {
-                print("Error loading bkg music")
-            }
-            
-            
-        }
-
         if let scene = GameScene(fileNamed: "GameScene") {
             // Configure the view.
             let skView = self.view as! SKView
