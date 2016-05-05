@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9104347B1CDBBC8B007A4C4C /* wow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9104347A1CDBBC8B007A4C4C /* wow.mp3 */; };
 		91E860731CDAD6E200D8B405 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E8606E1CDACBEA00D8B405 /* AVFoundation.framework */; };
 		91E860751CDAD9E800D8B405 /* Crystal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 91E860741CDAD9E800D8B405 /* Crystal.mp3 */; };
 		FF64FB061C91D4070058BFBC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FF64FB051C91D4070058BFBC /* Default-568h@2x.png */; };
@@ -36,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9104347A1CDBBC8B007A4C4C /* wow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wow.mp3; sourceTree = "<group>"; };
 		91E8606E1CDACBEA00D8B405 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		91E860741CDAD9E800D8B405 /* Crystal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Crystal.mp3; sourceTree = "<group>"; };
 		FF64FB051C91D4070058BFBC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -68,6 +70,7 @@
 		FF9B57C41C6FA9F0008C5090 = {
 			isa = PBXGroup;
 			children = (
+				9104347A1CDBBC8B007A4C4C /* wow.mp3 */,
 				91E860741CDAD9E800D8B405 /* Crystal.mp3 */,
 				91E8606E1CDACBEA00D8B405 /* AVFoundation.framework */,
 				FF64FB051C91D4070058BFBC /* Default-568h@2x.png */,
@@ -161,6 +164,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9104347B1CDBBC8B007A4C4C /* wow.mp3 in Resources */,
 				FF9B57D31C6FA9F0008C5090 /* GameScene.sks in Resources */,
 				FF9B57DF1C6FA9F0008C5090 /* LaunchScreen.storyboard in Resources */,
 				FFA75DED1C91D55000CB5783 /* MyActions.sks in Resources */,
