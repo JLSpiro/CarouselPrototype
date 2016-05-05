@@ -8,6 +8,7 @@
 
 import SpriteKit
 import Foundation
+import AVFoundation
 
 
 
@@ -67,6 +68,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lastRandNum: Int!
     
     override func didMoveToView(view: SKView) {
+        
+        // guess what this is for ;)
+        var bkgMusicPlayer = AVAudioPlayer()
+        
+        // load up the background music file and start playing
+        let pathToBkgMusic = NSBundle.mainBundle().pathForResource("Crystal", ofType:"mp3")
+        if let pathToBkgMusic = pathToBkgMusic {
+            let bkgMusicURL = NSURL(fileURLWithPath: pathToBkgMusic)
+            do {
+                try bkgMusicPlayer = AVAudioPlayer(contentsOfURL: bkgMusicURL)
+                bkgMusicPlayer.play()
+                bkgMusicPlayer.volume = 1
+            } catch {
+                print("Error loading bkg music")
+            }
+        }
+        
         
         state = GameState.watching
         hexNumber = 0
@@ -255,6 +273,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touchSpot.physicsBody!.contactTestBitMask = PhysicsCategory.Hex
         spotLocation(touches)
+        
+        
+        // first player touch makes a nice little sound
+        var initialTouchSoundPlayer = AVAudioPlayer()
+        let pathToInitialTouchSound = NSBundle.mainBundle().pathForResource("wow", ofType: "mp3")
+        if let pathToInitialTouchSound = pathToInitialTouchSound {
+            let initTouchURL = NSURL(fileURLWithPath: pathToInitialTouchSound)
+            do {
+                try initialTouchSoundPlayer = AVAudioPlayer(contentsOfURL: initTouchURL)
+                initialTouchSoundPlayer.play()
+                initialTouchSoundPlayer.volume = 1
+            } catch {
+                print("Error loading touch sound")
+            }
+        }
+
         
 
     }
