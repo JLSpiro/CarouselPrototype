@@ -27,20 +27,22 @@ struct PhysicsCategory {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    
+    let keeper = SharedKeeper.sharedInstance
     var player: SKSpriteNode!
     var key: SKSpriteNode!
+    var keyFob: SKSpriteNode?
     var keyHole: SKSpriteNode!
     var spot: SKSpriteNode!
     var trigger: SKSpriteNode!
     var door: SKSpriteNode!
     var targetField: SKFieldNode!
-    var spinJoint: SKPhysicsJointPin!
     var lastTouchPosition: CGPoint?
     var motionManager: CMMotionManager!
     var linked = false
-    var currentRoom: Int = 1
+    var currentRoom: Int!
     
+    var spinJoint: SKPhysicsJointPin!
+    var fobJoint: SKPhysicsJointPin!
 
     
     override func didMoveToView(view: SKView) {
@@ -50,14 +52,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         createPlayer()
         createKey()
         
-        spot = childNodeWithName("spot") as! SKSpriteNode
+        spot = childNodeWithName("//spot") as! SKSpriteNode
         keyHole = childNodeWithName("keyHole") as! SKSpriteNode
         door = childNodeWithName("door") as! SKSpriteNode
         
-        targetField = childNodeWithName("targetField") as! SKFieldNode
+        targetField = childNodeWithName("//targetField") as! SKFieldNode
         targetField.enabled = true
         
-        spot.position = targetField.position
+        //spot.position = targetField.position
         
         linked = false
         
@@ -81,7 +83,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Door | PhysicsCategory.KeyHole
         player.physicsBody?.contactTestBitMask = PhysicsCategory.Exit
         player.physicsBody?.fieldBitMask = PhysicsCategory.Target
-        
      
     }
     
@@ -98,6 +99,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         key.physicsBody?.categoryBitMask = PhysicsCategory.Key
         key.physicsBody?.collisionBitMask = PhysicsCategory.Wall
         key.physicsBody?.contactTestBitMask = PhysicsCategory.Trigger
+        
+        keyFob = childNodeWithName("keyFob") as? SKSpriteNode
+        if keyFob != nil {
+            print("fob here")
+            keyFob!.physicsBody?.dynamic = true
+            keyFob!.physicsBody?.pinned = true
+            keyFob!.physicsBody?.allowsRotation = false
+            keyFob!.physicsBody?.linearDamping = 10.0
+            keyFob!.physicsBody?.restitution = 0.2
+            keyFob!.physicsBody?.friction = 1.0
+            keyFob!.physicsBody?.mass = 20.0
+            keyFob!.physicsBody?.categoryBitMask = PhysicsCategory.Key
+            keyFob!.physicsBody?.collisionBitMask = PhysicsCategory.Wall
+
+            fobJoint = SKPhysicsJointPin.jointWithBodyA(keyFob!.physicsBody!, bodyB: key.physicsBody!, anchor: key.position)
+            fobJoint.lowerAngleLimit = -2.0
+            fobJoint.upperAngleLimit = 2.0
+            fobJoint.frictionTorque = 0.5
+            fobJoint.shouldEnableLimits = true
+            scene!.physicsWorld.addJoint(fobJoint)
+        }
+        
+        
     
   
     }
@@ -131,14 +155,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if collision == PhysicsCategory.Ball | PhysicsCategory.Exit {
-            if currentRoom == 1 {
-                currentRoom = 2
-            }else if currentRoom == 2 {
-                currentRoom = 1
+            if keeper.roomNumber == 1 {
+                keeper.roomNumber = 2
+            }else if keeper.roomNumber == 2 {
+                keeper.roomNumber = 3
+            }else if keeper.roomNumber == 3 {
+                keeper.roomNumber = 1
             }
-            newGame(currentRoom)
+            
+            print("roomNum \(keeper.roomNumber)")
+            newGame(keeper.roomNumber)
         }
     }
+    
+    
     
     func unLock(){
         scene!.physicsWorld.removeJoint(spinJoint)
@@ -152,15 +182,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func linkUp(){
         player.physicsBody?.dynamic = false
-        player.position = spot.position
-        targetField.enabled = false
-        spinJoint = SKPhysicsJointPin.jointWithBodyA(player.physicsBody!, bodyB: key.physicsBody!, anchor: player.position)
-        scene!.physicsWorld.addJoint(spinJoint)
-        key.physicsBody?.pinned = false
-        key.physicsBody?.affectedByGravity = true
-        key.physicsBody?.dynamic = true
-        key.physicsBody?.allowsRotation = true
+        
+        if keyFob != nil {
+            print("fob here")
+            player.position = convertPoint(spot.position, fromNode: keyFob!)// spot is a child of keyFob node
+            targetField.enabled = false
+            spinJoint = SKPhysicsJointPin.jointWithBodyA(player.physicsBody!, bodyB: keyFob!.physicsBody!, anchor: player.position)
+            scene!.physicsWorld.addJoint(spinJoint)
+
+            keyFob!.physicsBody?.dynamic = true
+            keyFob!.physicsBody?.pinned = false
+            keyFob!.physicsBody?.allowsRotation = true
+            keyFob!.physicsBody?.affectedByGravity = true
+            
+            key.physicsBody?.pinned = false
+            key.physicsBody?.affectedByGravity = true
+            key.physicsBody?.dynamic = true
+            key.physicsBody?.allowsRotation = true
+
+            
+         } else {
+            player.position = convertPoint(spot.position, fromNode: key)// spot is a child of key node
+            targetField.enabled = false
+            spinJoint = SKPhysicsJointPin.jointWithBodyA(player.physicsBody!, bodyB: key.physicsBody!, anchor: player.position)
+            scene!.physicsWorld.addJoint(spinJoint)
+            key.physicsBody?.pinned = false
+            key.physicsBody?.affectedByGravity = true
+            key.physicsBody?.dynamic = true
+            key.physicsBody?.allowsRotation = true
+
+        }
+
         player.physicsBody?.dynamic = true
+        
+
 
     }
     
@@ -184,15 +239,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let currentTouch = lastTouchPosition {
             let diff = CGPoint(x: currentTouch.x - player.position.x, y: currentTouch.y - player.position.y)
             physicsWorld.gravity = CGVector(dx: diff.x / 100, dy: diff.y / 100)
+            
         }
         
         #else
-            if let accelerometerData = motionManager.accelerometerData {
-              physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -200, dy: accelerometerData.acceleration.x * 200)
-            }
+            
+        if let accelerometerData = motionManager.accelerometerData {
+            physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -200, dy: accelerometerData.acceleration.x * 200)
+        }
+            
         #endif
+        if keyFob != nil {
+            if spot.containsPoint(convertPoint(player.position, toNode: keyFob!)) { //spot is a child of keyFob node
+                if linked == false{
+                    linked = true
+                    linkUp()
+                }
+
+            }
+         }
         
-        if spot.containsPoint(player.position) {
+        else if spot.containsPoint(convertPoint(player.position, toNode: key)) { //spot is a child of key node
             if linked == false{
                 linked = true
                 linkUp()
@@ -201,5 +268,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-     }
+    }
 }

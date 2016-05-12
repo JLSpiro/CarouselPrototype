@@ -50,7 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hand: SKSpriteNode!
     var wiper: SKSpriteNode!
     var eyeLeft: SKSpriteNode!
-    var eyeRight: SKSpriteNode!
+  //  var eyeRight: SKSpriteNode!
     
     var tilePosArrayA: NSMutableArray = []
     var tilePosArrayB: NSMutableArray = []
@@ -124,7 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      //   hand.colorBlendFactor = 0.2
         
         eyeLeft = childNodeWithName("eyeLeft") as! SKSpriteNode
-        eyeRight = childNodeWithName("eyeRight") as! SKSpriteNode
+   //     eyeRight = childNodeWithName("eyeRight") as! SKSpriteNode
 
         touchSpot = childNodeWithName("touchSpot") as! SKSpriteNode
         let touchSpotTexture = (touchSpot.texture)
@@ -139,7 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         generateSequence()
         runAction(SKAction.sequence([SKAction.waitForDuration(1.5),SKAction.runBlock({self.handMove(0)})]))
-        eyeRight.runAction(SKAction(named: "lookUp")!)
+   //     eyeRight.runAction(SKAction(named: "lookUp")!)
         eyeLeft.runAction(SKAction(named: "lookUp")!)
     }
     
@@ -397,7 +397,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
             }
  
-            eyeRight.runAction(SKAction(named: "lookUp")!)
+ //           eyeRight.runAction(SKAction(named: "lookUp")!)
             eyeLeft.runAction(SKAction(named: "lookUp")!)
 
             generateSequence()
@@ -419,7 +419,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
             }
  
-            eyeRight.runAction(SKAction(named: "lookDown")!)
+//           eyeRight.runAction(SKAction(named: "lookDown")!)
             eyeLeft.runAction(SKAction(named: "lookDown")!)
 
 

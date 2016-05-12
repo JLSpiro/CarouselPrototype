@@ -18,6 +18,8 @@
 		FFC183F51CC7C9930042F53F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFC183F31CC7C9930042F53F /* Main.storyboard */; };
 		FFC183F71CC7C9930042F53F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFC183F61CC7C9930042F53F /* Assets.xcassets */; };
 		FFC183FA1CC7C9930042F53F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFC183F81CC7C9930042F53F /* LaunchScreen.storyboard */; };
+		FFDF8E971CDCFA9F00806022 /* SharedKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF8E961CDCFA9F00806022 /* SharedKeeper.swift */; };
+		FFDF8E991CDD012400806022 /* Room3.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFDF8E981CDD012400806022 /* Room3.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		FFC183F61CC7C9930042F53F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFC183F91CC7C9930042F53F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FFC183FB1CC7C9930042F53F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFDF8E961CDCFA9F00806022 /* SharedKeeper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedKeeper.swift; sourceTree = "<group>"; };
+		FFDF8E981CDD012400806022 /* Room3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Room3.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,7 @@
 				FFC183EF1CC7C9920042F53F /* GameScene.swift */,
 				FFC183ED1CC7C9920042F53F /* Room1.sks */,
 				FF08245D1CD64934008B8E36 /* Room2.sks */,
+				FFDF8E981CDD012400806022 /* Room3.sks */,
 				FFC183F11CC7C9930042F53F /* GameViewController.swift */,
 				FFC183F31CC7C9930042F53F /* Main.storyboard */,
 				FFC183F61CC7C9930042F53F /* Assets.xcassets */,
@@ -78,6 +83,7 @@
 				FFC183FB1CC7C9930042F53F /* Info.plist */,
 				FFA2A1911CDA4B8B00A712FE /* Ball.sks */,
 				FFA2A1931CDA4BA400A712FE /* BallNode.swift */,
+				FFDF8E961CDCFA9F00806022 /* SharedKeeper.swift */,
 			);
 			path = MarbleKey;
 			sourceTree = "<group>";
@@ -140,6 +146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFDF8E991CDD012400806022 /* Room3.sks in Resources */,
 				FF08245E1CD64934008B8E36 /* Room2.sks in Resources */,
 				FF4AF7841CD3F11B004CF21F /* MyActions.sks in Resources */,
 				FFC183EE1CC7C9920042F53F /* Room1.sks in Resources */,
@@ -161,6 +168,7 @@
 				FFC183F21CC7C9930042F53F /* GameViewController.swift in Sources */,
 				FFA2A1941CDA4BA400A712FE /* BallNode.swift in Sources */,
 				FFC183EC1CC7C9920042F53F /* AppDelegate.swift in Sources */,
+				FFDF8E971CDCFA9F00806022 /* SharedKeeper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

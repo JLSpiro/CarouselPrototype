@@ -1,8 +1,8 @@
 //
 //  GameViewController.swift
-//  MarbleKey
+//  Jetpack Kid
 //
-//  Created by Jesse Spiro on 4/20/16.
+//  Created by Jesse Spiro on 5/10/16.
 //  Copyright (c) 2016 Jesse Spiro. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let scene = GameScene.room(1) {
+        if let scene = GameScene(fileNamed:"GameScene") {
             // Configure the view.
             let skView = self.view as! SKView
             skView.showsFPS = true
@@ -36,9 +36,7 @@ class GameViewController: UIViewController {
 
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-           // return .AllButUpsideDown
-            return .LandscapeRight
-            
+            return .AllButUpsideDown
         } else {
             return .All
         }
