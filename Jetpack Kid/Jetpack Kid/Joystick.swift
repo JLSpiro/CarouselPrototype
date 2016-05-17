@@ -14,21 +14,24 @@ class Joystick: SKSpriteNode {
     var joyButton: SKSpriteNode!
     var joyPad: SKSpriteNode!
     var touchPos: CGPoint!
-    var jetDelta: CGFloat!
+    var jetDelta: CGVector!
     var _joybtnDistSquared: CGFloat!
     var _joybtnAngle: CGFloat!
     var _joypadRadius: CGFloat!
     var _joypadRadiusSquared: CGFloat!
     var _isMovingJoybtn: Bool!
-    var jetVector: CGPoint!
+    var jetVector: CGVector! = CGVector(dx: 0, dy: 0)
+    
 
     
     func setUp(){
         joyButton = childNodeWithName("joyButton") as! SKSpriteNode
         joyPad = childNodeWithName("joyPad") as! SKSpriteNode
-        
+        _isMovingJoybtn = false
         _joypadRadius = joyPad.size.width * 0.4;
         _joypadRadiusSquared = pow(_joypadRadius,2);
+        userInteractionEnabled = true
+        
 
     }
 
@@ -38,93 +41,95 @@ class Joystick: SKSpriteNode {
         for touch in touches {
             if !_isMovingJoybtn && isTouchingJoybtn(touch) == true {
                 touchPos = joyPad.position // initially move the joystick button to touch point
-                
+                moveJoybtn(touch)
+                _isMovingJoybtn = true
             }
            
         }
 
     }
     
-    func distanceFromJoypadSquared(p: CGPoint) -> CGFloat {
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
+        for touch in touches {
+            if _isMovingJoybtn == true{
+                moveJoybtn(touch)
+            }
+
+        }
+        
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        stop()
+    }
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        stop()
+    }
+    
+    func distanceFromJoypadSquared(p: CGPoint) -> CGFloat {
+        // remember a squared + b squared = c squared?
         let p2 = joyPad.position
-        return sqrt(pow(p2.x-p.x,2)+pow(p2.y-p.y,2))
+        return pow(p2.x - p.x, 2) + pow(p2.y - p.y, 2)
+        
     }
     
     
     func isTouchingJoybtn(touch: UITouch) -> Bool{
         let c2: CGFloat = distanceFromJoypadSquared(touch.locationInNode(self))
         return (c2 < pow(_joypadRadius,2))
+        
     }
     
     func moveJoybtn(touch: UITouch){
         // get previous touch point and determine offset ???
         let prev: CGPoint = (_isMovingJoybtn != nil) ? touch.previousLocationInView(touch.view) : joyButton.position
-        let offset: CGPoint = CGPoint(x: touch.locationInNode(self).x - prev.x, y: touch.locationInNode(self).y - prev.y)
+        let offset: CGPoint = CGPoint(x: touch.locationInView(touch.view).x - prev.x, y: touch.locationInView(touch.view).y - prev.y)
         
-        
-        // get new purported joybtn position and delta to joypad center ?????
-        touchPos = CGPoint(x: touchPos.x + offset.x, y: touchPos.y + offset.y)
-        let delta:CGPoint = CGPoint(x: touchPos.x - joyPad.position.x, y: touchPos.y - joyPad.position.y)
-        let newPos: CGPoint = touchPos
-        jetVector = delta
-        
-         // get its angle and distance
-        _joybtnAngle = atan2(delta.x, delta.y)
-        _joybtnDistSquared = distanceFromJoypadSquared(newPos)
-        
-        // clamp it inside joypad
-        
-        if _joybtnDistSquared > _joypadRadiusSquared {
-           
+        if offset.x != 0 || offset.y != 0 {
+            // get new purported joybtn position and delta to joypad center ?????
+            touchPos = CGPoint(x: touchPos.x + offset.x, y: touchPos.y - offset.y)
+            let delta:CGVector = CGVector(dx: touchPos.x - joyPad.position.x, dy: touchPos.y - joyPad.position.y)
+            var newPos: CGPoint = touchPos
+            
+            
+            
+            // get its angle and distance
+            _joybtnAngle = delta.angle
+            _joybtnDistSquared = distanceFromJoypadSquared(newPos)
+         
+            // clamp it inside joypad
+            
+            if _joybtnDistSquared > _joypadRadiusSquared {
+                
+                let v: CGVector = CGVector.init(angle: _joybtnAngle)
+                let v2: CGVector = CGVector(dx: v.dy * _joypadRadius, dy: v.dx * _joypadRadius)
+                newPos = CGPoint(x: (v2.dy + joyPad.position.x), y: (v2.dx + joyPad.position.y))
+                
+               
+                _joybtnDistSquared = _joypadRadiusSquared
+                
+            }
+            
+            // set it to the new position
+            joyButton.position = newPos
+            if delta.dy > 0{  // if joystick up
+                jetVector = CGVector(dx: newPos.x * 2.5, dy: newPos.y * 3)
+            }
+            
         }
-
-        
-       
-        
-        
+ 
         
      }
     
-    -(void)moveJoybtn:(CCTouch*)touch
-    {
-    // get previous touch point and determine offset
-    CGPoint prev = (_isMovingJoybtn ? [[CCDirector sharedDirector] convertToGL:[touch previousLocationInView:[touch view]]]: _joyButton.position);
-    CGPoint offset = ccpSub(touch.locationInWorld, prev);
-    
-    
-    if( offset.x || offset.y )
-    {
-    // get new purported joybtn position and delta to joypad center
-    touchPos = ccpAdd(touchPos, offset);
-    CGPoint delta = ccpSub(touchPos, _joyPad.position);
-    CGPoint newPos = touchPos;
-    jetDelta = delta;
-    
-    // get its angle and distance
-    _joybtnAngle = ccpToAngle(delta);
-    _joybtnDistSquared = [self distanceFromJoypadSquared:newPos];
-    
-    // clamp it inside the joypad
-    if( _joybtnDistSquared > _joypadRadiusSquared )
-    {
-        newPos = ccpAdd(_joyPad.position,
-        ccpMult(ccpForAngle(_joybtnAngle), _joypadRadius));
-        _joybtnDistSquared = _joypadRadiusSquared;
-    
-    }
-    if (newPos.y > _joyPad.position.y) {
-    keeper.burnRate = _joybtnDistSquared/_joypadRadiusSquared;
-    
+    func stop(){
+        _isMovingJoybtn = false
+        jetVector = CGVector(dx: 0, dy: 0)
+        joyButton.runAction(SKAction.moveTo(joyPad.position, duration: 0.1))
     }
     
-    // set it to the new position
-    [_joyButton setPosition:newPos];
-    
-    }
-    }
-
-    
+ 
 
 }
 

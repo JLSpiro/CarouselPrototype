@@ -8,23 +8,31 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var joyStick: Joystick!
+    var hero:SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
-         
+        joyStick = childNodeWithName("//joyNode") as! Joystick
+        joyStick.setUp()
+        
+        hero = childNodeWithName("hero") as! SKSpriteNode
+       // hero = SKSpriteNode(imageNamed: "Bend2Left0")
+    
+        physicsWorld.contactDelegate = self
+        view.showsPhysics = true
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
         
-        for touch in touches {
-            let location = touch.locationInNode(self)
-            
-        }
-    }
+     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        hero.physicsBody?.applyForce(joyStick.jetVector)
+        print("\(joyStick.jetVector)")
     }
 }
+
