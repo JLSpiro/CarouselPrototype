@@ -7,20 +7,37 @@
 //
 
 import SpriteKit
+import Foundation
+
+struct PhysicsCategory {
+    static let None:  UInt32 = 0
+    static let Hero:   UInt32 = 0b1 // 1
+    static let Wall: UInt32 = 0b10 // 2
+    static let Ground: UInt32 = 0b100 // 4
+    static let Target:  UInt32 = 0b1000 // 8
+  //  static let Trigger: UInt32 = 0b10000 // 16
+  //  static let Door:UInt32 = 0b100000 // 32
+  //  static let Exit:  UInt32 = 0b1000000 // 64
+  //  static let KeyHole: UInt32 = 0b10000000 //128
+    
+}
+
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var joyStick: Joystick!
-    var hero:SKSpriteNode!
+    var hero:Hero!
+    var prevDirection: Int!
+    
     
     override func didMoveToView(view: SKView) {
+        physicsWorld.contactDelegate = self
         joyStick = childNodeWithName("//joyNode") as! Joystick
         joyStick.setUp()
         
-        hero = childNodeWithName("hero") as! SKSpriteNode
-       // hero = SKSpriteNode(imageNamed: "Bend2Left0")
-    
-        physicsWorld.contactDelegate = self
+        hero = childNodeWithName("//heroNode") as! Hero
+        hero.setUp()
+        
         view.showsPhysics = true
     }
     
@@ -32,7 +49,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         hero.physicsBody?.applyForce(joyStick.jetVector)
-        print("\(joyStick.jetVector)")
+        
+        prevDirection = hero._direction
+        if joyStick.jetVector.dx < 0 {
+            hero._direction = 0
+        }else if joyStick.jetVector.dx > 0{
+            hero._direction = 1
+        }else if joyStick.jetVector.dx == 0 {
+            hero._direction = prevDirection
+        }
+        
     }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+
+        let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        if collision == PhysicsCategory.Hero | PhysicsCategory.Target  {
+            print("contact")
+
+        }
+        if collision == PhysicsCategory.Hero | PhysicsCategory.Ground  {
+             hero.changeState(state.landing)
+            print("collision")
+            
+        }
+    }
+    
+    func didEndContact(contact: SKPhysicsContact) {
+        let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        if collision == PhysicsCategory.Hero | PhysicsCategory.Ground  {
+            print("end contact")
+            hero.changeState(state.flying)
+            
+        }
+
+    }
+    
+    
+    
+
 }
 

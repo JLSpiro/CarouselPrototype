@@ -17,6 +17,8 @@
 		FF0D1CBB1CE26E470088A9D7 /* Joystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */; };
 		FF0D1CC51CE27DDA0088A9D7 /* Joystick.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */; };
 		FF292DB81CEA56EE00518E62 /* SKUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF292DB71CEA56EE00518E62 /* SKUtils.swift */; };
+		FF61D1CE1CECCA0F00F82FF0 /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */; };
+		FFC5884D1CEBB2CF00F803AA /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC5884C1CEBB2CF00F803AA /* Hero.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Joystick.swift; sourceTree = "<group>"; };
 		FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Joystick.sks; sourceTree = "<group>"; };
 		FF292DB71CEA56EE00518E62 /* SKUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKUtils.swift; sourceTree = "<group>"; };
+		FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
+		FFC5884C1CEBB2CF00F803AA /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */,
 				FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */,
 				FF292DB71CEA56EE00518E62 /* SKUtils.swift */,
+				FFC5884C1CEBB2CF00F803AA /* Hero.swift */,
+				FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */,
 			);
 			name = JetPackKid;
 			path = "Jetpack Kid";
@@ -141,6 +147,7 @@
 				FF0D1CC51CE27DDA0088A9D7 /* Joystick.sks in Resources */,
 				FF0D1CA71CE269B40088A9D7 /* GameScene.sks in Resources */,
 				FF0D1CB31CE269B40088A9D7 /* LaunchScreen.storyboard in Resources */,
+				FF61D1CE1CECCA0F00F82FF0 /* Hero.sks in Resources */,
 				FF0D1CB01CE269B40088A9D7 /* Assets.xcassets in Resources */,
 				FF0D1CAE1CE269B40088A9D7 /* Main.storyboard in Resources */,
 			);
@@ -158,6 +165,7 @@
 				FF0D1CAB1CE269B40088A9D7 /* GameViewController.swift in Sources */,
 				FF292DB81CEA56EE00518E62 /* SKUtils.swift in Sources */,
 				FF0D1CA51CE269B40088A9D7 /* AppDelegate.swift in Sources */,
+				FFC5884D1CEBB2CF00F803AA /* Hero.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
