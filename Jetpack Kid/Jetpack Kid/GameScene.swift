@@ -48,7 +48,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        hero.physicsBody?.applyForce(joyStick.jetVector)
+        if joyStick.jetVector.dy > 30.0 {
+         //   hero.physicsBody?.applyForce(joyStick.jetVector)
+        
+        }
+        
+        hero.physicsBody?.applyForce(joyStick.jetVector * 10)
         
         prevDirection = hero._direction
         if joyStick.jetVector.dx < 0 {
@@ -65,20 +70,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == PhysicsCategory.Hero | PhysicsCategory.Target  {
-            print("contact")
+           
+        }
+        
+        if collision == PhysicsCategory.Hero | PhysicsCategory.Wall  {
+            let hitWall = contact.collisionImpulse
+            print("hit wall \(hitWall)")
 
         }
+
+        
         if collision == PhysicsCategory.Hero | PhysicsCategory.Ground  {
              hero.changeState(state.landing)
-            print("collision")
-            
+            let hit = contact.collisionImpulse
+            hero._landingForce = hit
+            print("hit ground\(hit)")
         }
     }
+    
+ 
     
     func didEndContact(contact: SKPhysicsContact) {
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == PhysicsCategory.Hero | PhysicsCategory.Ground  {
-            print("end contact")
             hero.changeState(state.flying)
             
         }
