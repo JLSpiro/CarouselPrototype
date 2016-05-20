@@ -114,9 +114,7 @@ class Joystick: SKSpriteNode {
             
             // set it to the new position
             joyButton.position = newPos
-            if delta.dy > 0{  // if joystick up
-                jetVector = CGVector(dx: newPos.x * 2.5, dy: newPos.y * 3)
-            }
+            jetVector = CGVector(dx: newPos.x * 2.0, dy: newPos.y * 3)
             
         }
  

@@ -48,21 +48,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        if joyStick.jetVector.dy > 30.0 {
-         //   hero.physicsBody?.applyForce(joyStick.jetVector)
         
-        }
-        
-        hero.physicsBody?.applyForce(joyStick.jetVector * 10)
-        
+     //   print("joystick X \(joyStick.jetVector.dx)")
         prevDirection = hero._direction
-        if joyStick.jetVector.dx < 0 {
-            hero._direction = 0
-        }else if joyStick.jetVector.dx > 0{
-            hero._direction = 1
-        }else if joyStick.jetVector.dx == 0 {
-            hero._direction = prevDirection
+        
+        if hero._currentState == state.flying || hero._currentState == state.stopped {
+            if joyStick.jetVector.dx < 0 {
+                hero._direction = 0
+            }else if joyStick.jetVector.dx > 0{
+                hero._direction = 1
+            }else if joyStick.jetVector.dx == 0 {
+                hero._direction = prevDirection
+            }
         }
+
+        
+        if joyStick.jetVector.dy > 60.0 {
+            hero.physicsBody?.applyForce(joyStick.jetVector * 10)
+            
+        }
+        if joyStick.jetVector.dy <= 60 {
+            if abs(joyStick.jetVector.dx) > 5 {
+                if hero._currentState == state.stopped{
+                    hero.changeState(state.walking)
+                }
+            }
+            
+        }
+        
+        
+
         
     }
     
@@ -74,17 +89,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if collision == PhysicsCategory.Hero | PhysicsCategory.Wall  {
-            let hitWall = contact.collisionImpulse
-            print("hit wall \(hitWall)")
+ 
 
         }
 
         
         if collision == PhysicsCategory.Hero | PhysicsCategory.Ground  {
-             hero.changeState(state.landing)
+            hero.changeState(state.landing)
+            hero.grounded = true
             let hit = contact.collisionImpulse
             hero._landingForce = hit
-            print("hit ground\(hit)")
         }
     }
     
@@ -93,7 +107,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didEndContact(contact: SKPhysicsContact) {
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == PhysicsCategory.Hero | PhysicsCategory.Ground  {
-            hero.changeState(state.flying)
+            hero.changeState(state.lifting)
+            hero.grounded = true
             
         }
 
