@@ -23,7 +23,7 @@ struct state {
 
 class Hero: SKSpriteNode {
     var _hero:SKSpriteNode!
-    var _jet:SKSpriteNode!
+    var _jetFire:SKSpriteNode!
     
     var _direction:Int!
     var grounded:Bool!
@@ -64,6 +64,7 @@ class Hero: SKSpriteNode {
     func setUp(){
 
         _hero = childNodeWithName("heroSprite") as! SKSpriteNode
+        _jetFire = childNodeWithName("jetFireSprite") as! SKSpriteNode
         
         _direction = 0
         _currentState = state.flying
@@ -96,6 +97,10 @@ class Hero: SKSpriteNode {
         
         for i in 0...19 {
             spinFrames.append(SKTexture(imageNamed: "Spin\(i)"))
+        }
+        
+        for i in 0...19 {
+            jetFireSpinFrames.append(SKTexture(imageNamed: "JetFireSpin\(i)"))
         }
         
         for i in 0...19 {
@@ -156,6 +161,8 @@ class Hero: SKSpriteNode {
             
         }
         
+        
+        
         turnRightAFrames = turnLeftAFrames.reverse()
         turnRightBFrames = turnLeftBFrames.reverse()
 
@@ -166,19 +173,32 @@ class Hero: SKSpriteNode {
     func changeState(newState:Int){
         _lastState = _currentState
         _currentState = newState
+        print("\(_direction)")
     }
     
 
     
     func step(){
+        
+        
+        if _currentState != state.flying {
+            _jetFire.hidden = true
+        }
+        
         if _currentState == state.flying {
-            if _direction == 0 && _spinFrame > 0 {
-                _spinFrame = _spinFrame - 1
-            }
+            
             if _direction == 1 && _spinFrame < 19 {
                 _spinFrame = _spinFrame + 1
+                _currentWalk = 2
+            }
+
+            if _direction == 0 && _spinFrame > 0 {
+                _spinFrame = _spinFrame - 1
+                _currentWalk = 0
             }
             _hero.texture = spinFrames[_spinFrame]
+            _jetFire.texture = jetFireSpinFrames[_spinFrame]
+            _jetFire.hidden = false
             
         }
         
@@ -230,14 +250,13 @@ class Hero: SKSpriteNode {
             }
         }
         
-        if _currentState == state.walking {
+        if _currentState == state.walking {// changed in GameScene update
             //walk left
             if _direction == 0 {
                 if _currentWalk == 0 {
                     if _walkFrame < 16 {
                         _walkFrame = _walkFrame + 1
                         _hero.texture = walkLeftBFrames[_walkFrame]
-                        //set velocity here
                         physicsBody?.velocity = CGVector(dx: -75, dy: 0)
                         if _walkFrame == 13 {
                             //play sound here
@@ -246,7 +265,7 @@ class Hero: SKSpriteNode {
                         _currentWalk = 1
                         _spinFrame = 0
                         _walkFrame = 0
-                        _currentState = state.stopped
+                        changeState(state.stopped)
                     }
                     
                 }
@@ -255,8 +274,7 @@ class Hero: SKSpriteNode {
                     if _walkFrame < 16 {
                         _walkFrame = _walkFrame + 1
                         _hero.texture = walkLeftAFrames[_walkFrame]
-                        //set velocity here
-                        physicsBody?.velocity = CGVector(dx: -75, dy: 0)
+                        physicsBody?.velocity = CGVector(dx: -90, dy: 0)
                         if _walkFrame == 13 {
                             //play sound here
                         }
@@ -264,7 +282,7 @@ class Hero: SKSpriteNode {
                         _currentWalk = 0
                         _walkFrame = 0
                         _spinFrame = 0
-                        _currentState = state.stopped
+                        changeState(state.stopped)
                     }
                 }
                 if _currentWalk == 2 {
@@ -275,13 +293,12 @@ class Hero: SKSpriteNode {
                         }
                         _hero.texture = turnLeftAFrames[_turnFrame]
                         
-                        //set velocity to stop
                         physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                     }else{
                         _currentWalk = 0
                         _turnFrame = 0
                         _spinFrame = 0
-                        _currentState = state.stopped
+                        changeState(state.stopped)
                     }
                 }
                 if _currentWalk == 3 {
@@ -291,13 +308,12 @@ class Hero: SKSpriteNode {
                             //play sound here
                         }
                         _hero.texture = turnLeftBFrames[_turnFrame]
-                        //set velocity to stop
                         physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                     }else{
                         _currentWalk = 1
                         _turnFrame = 0
                         _spinFrame = 0
-                        _currentState = state.stopped
+                        changeState(state.stopped)
                     }
                 }
                 
@@ -309,7 +325,6 @@ class Hero: SKSpriteNode {
                     if _walkFrame < 16 {
                         _walkFrame = _walkFrame + 1
                         _hero.texture = walkRightBFrames[_walkFrame]
-                        //set velocity here
                         physicsBody?.velocity = CGVector(dx: 75, dy: 0)
                         if _walkFrame == 13 {
                             //play sound here
@@ -318,7 +333,7 @@ class Hero: SKSpriteNode {
                         _currentWalk = 3
                         _walkFrame = 0
                         _spinFrame = 19
-                        _currentState = state.stopped
+                        changeState(state.stopped)
                     }
                     
                 }
@@ -327,8 +342,7 @@ class Hero: SKSpriteNode {
                     if _walkFrame < 16 {
                         _walkFrame = _walkFrame + 1
                         _hero.texture = walkRightAFrames[_walkFrame]
-                        //set velocity here
-                        physicsBody?.velocity = CGVector(dx: 75, dy: 0)
+                        physicsBody?.velocity = CGVector(dx: 90, dy: 0)
                         if _walkFrame == 13 {
                             //play sound here
                         }
@@ -336,7 +350,7 @@ class Hero: SKSpriteNode {
                         _currentWalk = 2
                         _walkFrame = 0
                         _spinFrame = 19
-                        _currentState = state.stopped
+                        changeState(state.stopped)
                     }
                 }
                 if _currentWalk == 0 {
@@ -346,13 +360,12 @@ class Hero: SKSpriteNode {
                             //play sound here
                         }
                         _hero.texture = turnRightAFrames[_turnFrame]
-                        //set velocity to stop
                         physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                     }else{
                         _currentWalk = 2
                         _turnFrame = 0
                         _spinFrame = 19
-                        _currentState = state.stopped
+                        changeState(state.stopped)
                     }
                 }
                 if _currentWalk == 1 {
@@ -362,13 +375,12 @@ class Hero: SKSpriteNode {
                             //play sound here
                         }
                         _hero.texture = turnRightBFrames[_turnFrame]
-                        //set velocity to stop
                         physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                     }else{
                         _currentWalk = 3
                         _turnFrame = 0
                         _spinFrame = 19
-                        _currentState = state.stopped
+                        changeState(state.stopped)
                     }
                 }
 
