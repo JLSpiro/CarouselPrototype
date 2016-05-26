@@ -12,13 +12,18 @@
 		FF0D1CA91CE269B40088A9D7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D1CA81CE269B40088A9D7 /* GameScene.swift */; };
 		FF0D1CAB1CE269B40088A9D7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D1CAA1CE269B40088A9D7 /* GameViewController.swift */; };
 		FF0D1CAE1CE269B40088A9D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF0D1CAC1CE269B40088A9D7 /* Main.storyboard */; };
-		FF0D1CB01CE269B40088A9D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF0D1CAF1CE269B40088A9D7 /* Assets.xcassets */; };
 		FF0D1CB31CE269B40088A9D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF0D1CB11CE269B40088A9D7 /* LaunchScreen.storyboard */; };
 		FF0D1CBB1CE26E470088A9D7 /* Joystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */; };
 		FF0D1CC51CE27DDA0088A9D7 /* Joystick.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */; };
 		FF292DB81CEA56EE00518E62 /* SKUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF292DB71CEA56EE00518E62 /* SKUtils.swift */; };
+		FF56AF941CF4B5E300B1021B /* MyActions.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF56AF931CF4B5E300B1021B /* MyActions.sks */; };
+		FF56AF9A1CF4C48600B1021B /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56AF991CF4C48600B1021B /* Bullet.swift */; };
 		FF61D1CE1CECCA0F00F82FF0 /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */; };
+		FF936A8E1CF3B44600059C65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF936A8D1CF3B44600059C65 /* Assets.xcassets */; };
 		FFC5884D1CEBB2CF00F803AA /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC5884C1CEBB2CF00F803AA /* Hero.swift */; };
+		FFD278D81CF3916600286FD3 /* Trigger.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFD278D71CF3916600286FD3 /* Trigger.sks */; };
+		FFD278DA1CF3923200286FD3 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD278D91CF3923200286FD3 /* Trigger.swift */; };
+		FFDE653E1CF7940000EFCB78 /* GlowRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDE653D1CF7940000EFCB78 /* GlowRing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,14 +33,19 @@
 		FF0D1CA81CE269B40088A9D7 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FF0D1CAA1CE269B40088A9D7 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		FF0D1CAD1CE269B40088A9D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		FF0D1CAF1CE269B40088A9D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF0D1CB21CE269B40088A9D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF0D1CB41CE269B40088A9D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Joystick.swift; sourceTree = "<group>"; };
 		FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Joystick.sks; sourceTree = "<group>"; };
 		FF292DB71CEA56EE00518E62 /* SKUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKUtils.swift; sourceTree = "<group>"; };
+		FF56AF931CF4B5E300B1021B /* MyActions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyActions.sks; path = ../MyActions.sks; sourceTree = "<group>"; };
+		FF56AF991CF4C48600B1021B /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
+		FF936A8D1CF3B44600059C65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFC5884C1CEBB2CF00F803AA /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		FFD278D71CF3916600286FD3 /* Trigger.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Trigger.sks; sourceTree = "<group>"; };
+		FFD278D91CF3923200286FD3 /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
+		FFDE653D1CF7940000EFCB78 /* GlowRing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlowRing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,17 +78,22 @@
 		FF0D1CA31CE269B40088A9D7 /* JetPackKid */ = {
 			isa = PBXGroup;
 			children = (
+				FF56AF931CF4B5E300B1021B /* MyActions.sks */,
 				FF0D1CA41CE269B40088A9D7 /* AppDelegate.swift */,
 				FF0D1CA61CE269B40088A9D7 /* GameScene.sks */,
 				FF0D1CA81CE269B40088A9D7 /* GameScene.swift */,
 				FF0D1CAA1CE269B40088A9D7 /* GameViewController.swift */,
 				FF0D1CAC1CE269B40088A9D7 /* Main.storyboard */,
-				FF0D1CAF1CE269B40088A9D7 /* Assets.xcassets */,
 				FF0D1CB11CE269B40088A9D7 /* LaunchScreen.storyboard */,
+				FF936A8D1CF3B44600059C65 /* Assets.xcassets */,
 				FF0D1CB41CE269B40088A9D7 /* Info.plist */,
 				FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */,
 				FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */,
+				FFD278D91CF3923200286FD3 /* Trigger.swift */,
+				FFD278D71CF3916600286FD3 /* Trigger.sks */,
 				FF292DB71CEA56EE00518E62 /* SKUtils.swift */,
+				FF56AF991CF4C48600B1021B /* Bullet.swift */,
+				FFDE653D1CF7940000EFCB78 /* GlowRing.swift */,
 				FFC5884C1CEBB2CF00F803AA /* Hero.swift */,
 				FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */,
 			);
@@ -146,9 +161,11 @@
 			files = (
 				FF0D1CC51CE27DDA0088A9D7 /* Joystick.sks in Resources */,
 				FF0D1CA71CE269B40088A9D7 /* GameScene.sks in Resources */,
+				FFD278D81CF3916600286FD3 /* Trigger.sks in Resources */,
+				FF56AF941CF4B5E300B1021B /* MyActions.sks in Resources */,
 				FF0D1CB31CE269B40088A9D7 /* LaunchScreen.storyboard in Resources */,
+				FF936A8E1CF3B44600059C65 /* Assets.xcassets in Resources */,
 				FF61D1CE1CECCA0F00F82FF0 /* Hero.sks in Resources */,
-				FF0D1CB01CE269B40088A9D7 /* Assets.xcassets in Resources */,
 				FF0D1CAE1CE269B40088A9D7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,10 +179,13 @@
 			files = (
 				FF0D1CA91CE269B40088A9D7 /* GameScene.swift in Sources */,
 				FF0D1CBB1CE26E470088A9D7 /* Joystick.swift in Sources */,
+				FFDE653E1CF7940000EFCB78 /* GlowRing.swift in Sources */,
 				FF0D1CAB1CE269B40088A9D7 /* GameViewController.swift in Sources */,
 				FF292DB81CEA56EE00518E62 /* SKUtils.swift in Sources */,
+				FFD278DA1CF3923200286FD3 /* Trigger.swift in Sources */,
 				FF0D1CA51CE269B40088A9D7 /* AppDelegate.swift in Sources */,
 				FFC5884D1CEBB2CF00F803AA /* Hero.swift in Sources */,
+				FF56AF9A1CF4C48600B1021B /* Bullet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

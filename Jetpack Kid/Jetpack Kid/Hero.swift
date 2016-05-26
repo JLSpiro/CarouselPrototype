@@ -25,8 +25,11 @@ class Hero: SKSpriteNode {
     var _hero:SKSpriteNode!
     var _jetFire:SKSpriteNode!
     
+    
     var _direction:Int!
     var grounded:Bool!
+    var shooting:Bool!
+    var shocking:Bool!
     var _landingForce: CGFloat!
     var _currentState:Int!
     var _lastState:Int!
@@ -37,6 +40,9 @@ class Hero: SKSpriteNode {
     var _turnFrame:Int!
     var _currentWalk:Int!
     
+    var heroPos:CGPoint!
+    var shootLPos:CGPoint!
+    var shootRPos:CGPoint!
    
     
     var timer = NSTimer()
@@ -57,7 +63,6 @@ class Hero: SKSpriteNode {
     var shockRightFrames:[SKTexture] = []
     var shockLeftFrames:[SKTexture] = []
     
-    
 
  
     
@@ -65,6 +70,14 @@ class Hero: SKSpriteNode {
 
         _hero = childNodeWithName("heroSprite") as! SKSpriteNode
         _jetFire = childNodeWithName("jetFireSprite") as! SKSpriteNode
+        
+        heroPos = _hero.anchorPoint
+        //shootLPos = CGPoint(x: heroPos.x - _hero.size.width * 0.5, y: heroPos.y)
+        //shootRPos = CGPoint(x: heroPos.x + _hero.size.width * 0.5, y: heroPos.y)
+        
+        shootLPos = childNodeWithName("shootLPos")?.position
+        shootRPos = childNodeWithName("shootRPos")?.position
+        
         
         _direction = 0
         _currentState = state.flying
@@ -76,6 +89,7 @@ class Hero: SKSpriteNode {
         _liftFrame = 26
         _turnFrame = 0
         grounded = false
+        shooting = false
   
         physicsBody = SKPhysicsBody(rectangleOfSize: _hero.size)
         physicsBody?.affectedByGravity = true
@@ -162,7 +176,7 @@ class Hero: SKSpriteNode {
         }
         
         
-        
+
         turnRightAFrames = turnLeftAFrames.reverse()
         turnRightBFrames = turnLeftBFrames.reverse()
 
@@ -173,13 +187,23 @@ class Hero: SKSpriteNode {
     func changeState(newState:Int){
         _lastState = _currentState
         _currentState = newState
-        print("\(_direction)")
     }
     
+    func shootFlying(){
+        
+        if _spinFrame == 0 {
+            shooting = true
 
+            _hero.runAction(SKAction(named: "shootLeft")!, completion: {self.shooting = false})
+        }
+        if _spinFrame == 19 {
+            shooting = true
+            _hero.runAction(SKAction(named: "shootRight")!, completion: {self.shooting = false})
+        }
+
+    }
     
     func step(){
-        
         
         if _currentState != state.flying {
             _jetFire.hidden = true
@@ -187,17 +211,23 @@ class Hero: SKSpriteNode {
         
         if _currentState == state.flying {
             
-            if _direction == 1 && _spinFrame < 19 {
-                _spinFrame = _spinFrame + 1
-                _currentWalk = 2
+            if !shooting{
+                if _direction == 1 && _spinFrame < 19 {
+                    _spinFrame = _spinFrame + 1
+                    _currentWalk = 2
+                }
+                
+                if _direction == 0 && _spinFrame > 0 {
+                    _spinFrame = _spinFrame - 1
+                    _currentWalk = 0
+                }
+                
+                _hero.texture = spinFrames[_spinFrame]
+                _jetFire.texture = jetFireSpinFrames[_spinFrame]
             }
+            
 
-            if _direction == 0 && _spinFrame > 0 {
-                _spinFrame = _spinFrame - 1
-                _currentWalk = 0
-            }
-            _hero.texture = spinFrames[_spinFrame]
-            _jetFire.texture = jetFireSpinFrames[_spinFrame]
+
             _jetFire.hidden = false
             
         }

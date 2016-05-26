@@ -15,7 +15,7 @@ struct PhysicsCategory {
     static let Wall: UInt32 = 0b10 // 2
     static let Ground: UInt32 = 0b100 // 4
     static let Target:  UInt32 = 0b1000 // 8
-  //  static let Trigger: UInt32 = 0b10000 // 16
+    static let Bullet: UInt32 = 0b10000 // 16
   //  static let Door:UInt32 = 0b100000 // 32
   //  static let Exit:  UInt32 = 0b1000000 // 64
   //  static let KeyHole: UInt32 = 0b10000000 //128
@@ -25,30 +25,56 @@ struct PhysicsCategory {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    
     var joyStick: Joystick!
+    var trigger: Trigger!
     var hero:Hero!
     var prevDirection: Int!
     
     
     override func didMoveToView(view: SKView) {
+        userInteractionEnabled = true
+        
         physicsWorld.contactDelegate = self
+        
         joyStick = childNodeWithName("//joyNode") as! Joystick
         joyStick.setUp()
         
+        trigger = childNodeWithName("//triggerNode") as! Trigger
+        trigger.setUp()
+        
         hero = childNodeWithName("//heroNode") as! Hero
         hero.setUp()
+        
+        
+       
         
      //   view.showsPhysics = true
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
-        
+        for touch in touches {
+            if trigger.isTouchingTrigger(touch) == true {
+                shoot()
+            }
+        }
+
      }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-     
+       
+        enumerateChildNodesWithName("bullet") {node, _ in
+            let aBullet = node as! Bullet
+            let aRing = GlowRing()
+            aRing.setUp()
+            aRing.position = aBullet.position
+            self.addChild(aRing)
+            
+            
+        }
+        
         prevDirection = hero._direction
         if hero._currentState == state.flying{
             if joyStick.jetVector.dx < 0 {
@@ -84,19 +110,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         hero._direction = prevDirection
                     }
 
-                    //force is applied in Hero class
+                    //force for walking is applied in Hero class
                 }
             }
             
         }
         
         
+    }
+    
+    func shoot(){
+        
+ 
+        if hero._currentState == state.flying {
+            hero.shootFlying()
+        }
+        
+      //  let bullet:SKSpriteNode = SKSpriteNode(imageNamed: "laser")
+        let bullet:Bullet = Bullet()
+        bullet.setUp(hero._direction)
+        bullet.setScale(0.7)
+        bullet.blendMode = SKBlendMode.Screen
+        
+        if hero._direction == 0 {
+            bullet.position = convertPoint(hero.shootLPos, fromNode: hero)
+        }
+        if hero._direction == 1 {
+            bullet.position = convertPoint(hero.shootRPos, fromNode: hero)
+        }
 
         
+       // bullet.position = convertPoint(hero.heroPos, fromNode: hero)
         
+        bullet.zPosition = 2
+        addChild(bullet)
+        
+        if hero._direction == 0{
+            
+            bullet.physicsBody?.applyForce(CGVector(dx: -50000, dy: 0))
+        }
+        if hero._direction == 1{
+            bullet.physicsBody?.applyForce(CGVector(dx: 50000, dy: 0))
+        }
 
+
+        
         
     }
+
     
     func didBeginContact(contact: SKPhysicsContact) {
 
@@ -120,6 +181,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let hit = contact.collisionImpulse
             hero._landingForce = hit
         }
+        
+        if collision == PhysicsCategory.Bullet | PhysicsCategory.Wall {
+            let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            aBullet?.removeFromParent()
+        }
+
     }
     
  
@@ -130,6 +199,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hero.grounded = false
             
         }
+        
 
     }
     
