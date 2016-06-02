@@ -72,8 +72,6 @@ class Hero: SKSpriteNode {
         _jetFire = childNodeWithName("jetFireSprite") as! SKSpriteNode
         
         heroPos = _hero.anchorPoint
-        //shootLPos = CGPoint(x: heroPos.x - _hero.size.width * 0.5, y: heroPos.y)
-        //shootRPos = CGPoint(x: heroPos.x + _hero.size.width * 0.5, y: heroPos.y)
         
         shootLPos = childNodeWithName("shootLPos")?.position
         shootRPos = childNodeWithName("shootRPos")?.position

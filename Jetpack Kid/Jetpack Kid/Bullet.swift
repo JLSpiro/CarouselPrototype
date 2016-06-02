@@ -19,7 +19,6 @@ class Bullet: SKSpriteNode{
     
     func setUp(direction:Int){
         self.name = "bullet"
-        print("bullet added")
         _bullet = SKSpriteNode(imageNamed: "laser")
         addChild(_bullet)
         

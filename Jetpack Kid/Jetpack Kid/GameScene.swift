@@ -25,20 +25,31 @@ struct PhysicsCategory {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    
+    var cameraNode: SKCameraNode!
+  
     var joyStick: Joystick!
     var trigger: Trigger!
     var hero:Hero!
     var prevDirection: Int!
     
+    var joyStickPos: CGPoint!
+    
+
+
     
     override func didMoveToView(view: SKView) {
         userInteractionEnabled = true
         
         physicsWorld.contactDelegate = self
+     //   view.showsPhysics = true
+        
+        cameraNode = childNodeWithName("CameraNode") as! SKCameraNode
+        
+        camera = cameraNode
         
         joyStick = childNodeWithName("//joyNode") as! Joystick
         joyStick.setUp()
+        
         
         trigger = childNodeWithName("//triggerNode") as! Trigger
         trigger.setUp()
@@ -46,11 +57,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hero = childNodeWithName("//heroNode") as! Hero
         hero.setUp()
         
-        
-       
-        
-     //   view.showsPhysics = true
+
     }
+    
+ 
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
@@ -64,7 +74,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-       
+        
+        cameraNode.position = convertPoint(hero.heroPos, fromNode: hero)
+        
         enumerateChildNodesWithName("bullet") {node, _ in
             let aBullet = node as! Bullet
             let aRing = GlowRing()
@@ -118,6 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
     }
+
     
     func shoot(){
         

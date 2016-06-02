@@ -16,9 +16,11 @@
 		FF0D1CBB1CE26E470088A9D7 /* Joystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */; };
 		FF0D1CC51CE27DDA0088A9D7 /* Joystick.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */; };
 		FF292DB81CEA56EE00518E62 /* SKUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF292DB71CEA56EE00518E62 /* SKUtils.swift */; };
+		FF48B6CB1CFF7EA300D030A7 /* GirderLong.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF48B6CA1CFF7EA300D030A7 /* GirderLong.sks */; };
 		FF56AF941CF4B5E300B1021B /* MyActions.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF56AF931CF4B5E300B1021B /* MyActions.sks */; };
 		FF56AF9A1CF4C48600B1021B /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56AF991CF4C48600B1021B /* Bullet.swift */; };
 		FF61D1CE1CECCA0F00F82FF0 /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */; };
+		FF6D8F021CFF4A73006F76B7 /* GirderBig.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */; };
 		FF936A8E1CF3B44600059C65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF936A8D1CF3B44600059C65 /* Assets.xcassets */; };
 		FFC5884D1CEBB2CF00F803AA /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC5884C1CEBB2CF00F803AA /* Hero.swift */; };
 		FFD278D81CF3916600286FD3 /* Trigger.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFD278D71CF3916600286FD3 /* Trigger.sks */; };
@@ -38,9 +40,11 @@
 		FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Joystick.swift; sourceTree = "<group>"; };
 		FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Joystick.sks; sourceTree = "<group>"; };
 		FF292DB71CEA56EE00518E62 /* SKUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKUtils.swift; sourceTree = "<group>"; };
+		FF48B6CA1CFF7EA300D030A7 /* GirderLong.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GirderLong.sks; sourceTree = "<group>"; };
 		FF56AF931CF4B5E300B1021B /* MyActions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyActions.sks; path = ../MyActions.sks; sourceTree = "<group>"; };
 		FF56AF991CF4C48600B1021B /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
+		FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GirderBig.sks; sourceTree = "<group>"; };
 		FF936A8D1CF3B44600059C65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFC5884C1CEBB2CF00F803AA /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		FFD278D71CF3916600286FD3 /* Trigger.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Trigger.sks; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 				FFDE653D1CF7940000EFCB78 /* GlowRing.swift */,
 				FFC5884C1CEBB2CF00F803AA /* Hero.swift */,
 				FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */,
+				FF48B6CA1CFF7EA300D030A7 /* GirderLong.sks */,
+				FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */,
 			);
 			name = JetPackKid;
 			path = "Jetpack Kid";
@@ -159,7 +165,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF48B6CB1CFF7EA300D030A7 /* GirderLong.sks in Resources */,
 				FF0D1CC51CE27DDA0088A9D7 /* Joystick.sks in Resources */,
+				FF6D8F021CFF4A73006F76B7 /* GirderBig.sks in Resources */,
 				FF0D1CA71CE269B40088A9D7 /* GameScene.sks in Resources */,
 				FFD278D81CF3916600286FD3 /* Trigger.sks in Resources */,
 				FF56AF941CF4B5E300B1021B /* MyActions.sks in Resources */,
