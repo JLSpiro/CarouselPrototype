@@ -9,9 +9,6 @@
 import Foundation
 
 
-import Foundation
-
-
 private let _sharedInstance = SharedKeeper()
 
 class SharedKeeper {

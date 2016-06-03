@@ -16,8 +16,8 @@ struct PhysicsCategory {
     static let Ground: UInt32 = 0b100 // 4
     static let Target:  UInt32 = 0b1000 // 8
     static let Bullet: UInt32 = 0b10000 // 16
-  //  static let Door:UInt32 = 0b100000 // 32
-  //  static let Exit:  UInt32 = 0b1000000 // 64
+    static let FuelTank: UInt32 = 0b100000 // 32
+    static let Robot:  UInt32 = 0b1000000 // 64
   //  static let KeyHole: UInt32 = 0b10000000 //128
     
 }
@@ -26,22 +26,22 @@ struct PhysicsCategory {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var cameraNode: SKCameraNode!
-  
+    let keeper = SharedKeeper.sharedInstance
     var joyStick: Joystick!
     var trigger: Trigger!
+    var fuelGauge: FuelGauge!
     var hero:Hero!
     var prevDirection: Int!
     
     var joyStickPos: CGPoint!
     
 
-
     
     override func didMoveToView(view: SKView) {
         userInteractionEnabled = true
         
         physicsWorld.contactDelegate = self
-     //   view.showsPhysics = true
+        view.showsPhysics = true
         
         cameraNode = childNodeWithName("CameraNode") as! SKCameraNode
         
@@ -54,11 +54,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trigger = childNodeWithName("//triggerNode") as! Trigger
         trigger.setUp()
         
+        fuelGauge = childNodeWithName("//fuelGaugeNode") as! FuelGauge
+        fuelGauge.setUp()
+        
         hero = childNodeWithName("//heroNode") as! Hero
         hero.setUp()
+  
         
+        enumerateChildNodesWithName("//fuelTankNode") {node, _ in
+            let aTank = node as! FuelTank
+            aTank.setUp()
+            
+        }
+        enumerateChildNodesWithName("//bigBotNode") {node, _ in
+            let aBot = node as! BigBot
+            aBot.setUp()
+            
+        }
 
-    }
+
+ }
     
  
     
@@ -74,9 +89,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        
+     //   print("\(joyStick.jetVector.dy)")
         cameraNode.position = convertPoint(hero.heroPos, fromNode: hero)
-        
+        fuelGauge.setLevel()
+          
         enumerateChildNodesWithName("bullet") {node, _ in
             let aBullet = node as! Bullet
             let aRing = GlowRing()
@@ -100,17 +116,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         
         if joyStick.jetVector.dy > 60.0 {
-            if hero._currentState == state.stopped{
-                hero.changeState(state.lifting)
-                
-            }
-            if hero._currentState == state.lifting || hero._currentState == state.flying{
-                hero.physicsBody?.applyForce(joyStick.jetVector * 10)
+            if keeper.fuelLevel > 0 {
+                fuelGauge.burn(joyStick.jetVector.dy)
+                let rand:CGFloat = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+                hero._jetFire.alpha = 0.5 + rand
+
+                if hero._currentState == state.stopped {
+                    hero.changeState(state.lifting)
+                    
+                }
+                if hero._currentState == state.lifting || hero._currentState == state.flying{
+                    hero.physicsBody?.applyForce(joyStick.jetVector * 10)
+                }
+             }
+            
+            if keeper.fuelLevel <= 0 {
+                hero._jetFire.alpha = 0.0
             }
             
             
         }
         if joyStick.jetVector.dy <= 60 {
+            hero._jetFire.alpha = 0.0
             if abs(joyStick.jetVector.dx) > 5 {
                 if hero._currentState == state.stopped{
                     hero.changeState(state.walking)
@@ -195,16 +222,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hero._landingForce = hit
         }
         
+        if collision == PhysicsCategory.Hero | PhysicsCategory.FuelTank {
+            let aTank = (contact.bodyA.categoryBitMask == PhysicsCategory.FuelTank) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            let thisTank = aTank as! FuelTank
+            thisTank.turnOn()
+             
+        }
+        
         if collision == PhysicsCategory.Bullet | PhysicsCategory.Wall {
             let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
                 contact.bodyA.node :
                 contact.bodyB.node
             aBullet?.removeFromParent()
         }
+        
 
     }
     
- 
     
     func didEndContact(contact: SKPhysicsContact) {
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
@@ -212,8 +248,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hero.grounded = false
             
         }
+/*
+        if collision == PhysicsCategory.Hero | PhysicsCategory.FuelTank {
+            let aTank = (contact.bodyA.categoryBitMask == PhysicsCategory.FuelTank) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            let thisTank = aTank as! FuelTank
+            if refueling == true {
+                refueling = false
+                thisTank.turnOff()
+            }
+            
+        }
+*/
         
-
+ 
     }
     
     

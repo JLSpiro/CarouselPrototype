@@ -100,7 +100,6 @@ class Hero: SKSpriteNode {
         physicsBody?.restitution = 0.0
         physicsBody?.categoryBitMask = PhysicsCategory.Hero
         physicsBody?.collisionBitMask = PhysicsCategory.Ground | PhysicsCategory.Wall
-        physicsBody?.contactTestBitMask = PhysicsCategory.Target
         
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.04, target: self, selector: #selector(step), userInfo: nil, repeats: true)
@@ -203,9 +202,7 @@ class Hero: SKSpriteNode {
     
     func step(){
         
-        if _currentState != state.flying {
-            _jetFire.hidden = true
-        }
+        _jetFire.texture = jetFireSpinFrames[_spinFrame]
         
         if _currentState == state.flying {
             
@@ -221,12 +218,10 @@ class Hero: SKSpriteNode {
                 }
                 
                 _hero.texture = spinFrames[_spinFrame]
-                _jetFire.texture = jetFireSpinFrames[_spinFrame]
+                
             }
             
 
-
-            _jetFire.hidden = false
             
         }
         
