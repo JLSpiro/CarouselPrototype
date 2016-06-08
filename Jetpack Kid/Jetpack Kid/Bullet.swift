@@ -31,15 +31,19 @@ class Bullet: SKSpriteNode{
         physicsBody = SKPhysicsBody(rectangleOfSize: _bullet.size)
         physicsBody?.affectedByGravity = false
         physicsBody?.allowsRotation = false
-        physicsBody?.mass = 0.5
+        physicsBody?.mass = 0.2
 
         physicsBody?.dynamic = true
         physicsBody?.pinned = false
         physicsBody?.restitution = 0.0
         physicsBody?.categoryBitMask = PhysicsCategory.Bullet
-        physicsBody?.collisionBitMask = PhysicsCategory.Wall
+        physicsBody?.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Robot
 
         
+    }
+    
+    func removeBullet(){
+        self.removeFromParent()
     }
 
     

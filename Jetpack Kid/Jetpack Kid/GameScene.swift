@@ -30,9 +30,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var joyStick: Joystick!
     var trigger: Trigger!
     var fuelGauge: FuelGauge!
+    var hearts: Hearts!
     var hero:Hero!
     var prevDirection: Int!
-    
     var joyStickPos: CGPoint!
     
 
@@ -57,9 +57,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         fuelGauge = childNodeWithName("//fuelGaugeNode") as! FuelGauge
         fuelGauge.setUp()
         
+        
         hero = childNodeWithName("//heroNode") as! Hero
         hero.setUp()
   
+        keeper.hitPoints = 4
+        
+        hearts = childNodeWithName("//heartsNode") as! Hearts
+        hearts.setUp()
+        hearts.setLives()
+        
+
         
         enumerateChildNodesWithName("//fuelTankNode") {node, _ in
             let aTank = node as! FuelTank
@@ -72,9 +80,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
 
-
- }
-    
+    }
  
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -118,9 +124,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if joyStick.jetVector.dy > 60.0 {
             if keeper.fuelLevel > 0 {
                 fuelGauge.burn(joyStick.jetVector.dy)
-                let rand:CGFloat = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
-                hero._jetFire.alpha = 0.5 + rand
-
+                
+                hero.jetOn = true
+                
                 if hero._currentState == state.stopped {
                     hero.changeState(state.lifting)
                     
@@ -131,6 +137,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
              }
             
             if keeper.fuelLevel <= 0 {
+                hero.jetOn = false
                 hero._jetFire.alpha = 0.0
             }
             
@@ -138,20 +145,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if joyStick.jetVector.dy <= 60 {
             hero._jetFire.alpha = 0.0
-            if abs(joyStick.jetVector.dx) > 5 {
-                if hero._currentState == state.stopped{
-                    hero.changeState(state.walking)
-                    if joyStick.jetVector.dx < 0 {
-                        hero._direction = 0
-                    }else if joyStick.jetVector.dx > 0{
-                        hero._direction = 1
-                    }else if joyStick.jetVector.dx == 0 {
-                        hero._direction = prevDirection
+            if hero.grounded == true {
+                if abs(joyStick.jetVector.dx) > 5 {
+                    if hero._currentState == state.stopped{
+                        hero.changeState(state.walking)
+                        if joyStick.jetVector.dx < 0 {
+                            hero._direction = 0
+                        }else if joyStick.jetVector.dx > 0{
+                            hero._direction = 1
+                        }else if joyStick.jetVector.dx == 0 {
+                            hero._direction = prevDirection
+                        }
+                        
+                        //force for walking is applied in Hero class
                     }
-
-                    //force for walking is applied in Hero class
                 }
+
+            }else{
+                hero._currentState = state.flying
             }
+            
+
             
         }
         
@@ -187,10 +201,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if hero._direction == 0{
             
-            bullet.physicsBody?.applyForce(CGVector(dx: -50000, dy: 0))
+            bullet.physicsBody?.applyForce(CGVector(dx: -25000, dy: 0))
         }
         if hero._direction == 1{
-            bullet.physicsBody?.applyForce(CGVector(dx: 50000, dy: 0))
+            bullet.physicsBody?.applyForce(CGVector(dx: 25000, dy: 0))
         }
 
 
@@ -235,9 +249,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
                 contact.bodyA.node :
                 contact.bodyB.node
-            aBullet?.removeFromParent()
+            let thisBullet = aBullet as! Bullet
+            thisBullet.removeBullet()
         }
         
+        if collision == PhysicsCategory.Bullet | PhysicsCategory.Robot {
+            let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            let thisBullet = aBullet as! Bullet
+            thisBullet.removeBullet()
+        }
+
 
     }
     

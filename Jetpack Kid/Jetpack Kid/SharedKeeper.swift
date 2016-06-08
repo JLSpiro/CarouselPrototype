@@ -14,6 +14,7 @@ private let _sharedInstance = SharedKeeper()
 class SharedKeeper {
     
     var fuelLevel:CGFloat!
+    var hitPoints: Int!
     
     
     private init() {

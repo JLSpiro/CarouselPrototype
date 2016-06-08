@@ -21,7 +21,7 @@ class GlowRing: SKSpriteNode{
     
     func setUp(){
         
-        print("bullet added")
+        
         _ring = SKSpriteNode(imageNamed: "glowRing")
         addChild(_ring)
         
@@ -35,7 +35,7 @@ class GlowRing: SKSpriteNode{
     
     
     func fadeOut(){
-        grow  = grow * 1.09
+        grow  = grow * 1.02
         _ring.setScale(grow)
         _ring.alpha = _ring.alpha - 0.08
         if _ring.alpha <= 0 {

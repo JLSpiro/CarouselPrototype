@@ -19,11 +19,13 @@
 		FF2BA23F1D0076FF00DCAE6C /* FuelGauge.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF2BA23E1D0076FF00DCAE6C /* FuelGauge.sks */; };
 		FF2BA2411D0078DA00DCAE6C /* FuelGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2BA2401D0078DA00DCAE6C /* FuelGauge.swift */; };
 		FF48B6CB1CFF7EA300D030A7 /* GirderLong.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF48B6CA1CFF7EA300D030A7 /* GirderLong.sks */; };
+		FF5052E71D0887FC00DD26A1 /* Hearts.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF5052E61D0887FC00DD26A1 /* Hearts.sks */; };
 		FF56AF941CF4B5E300B1021B /* MyActions.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF56AF931CF4B5E300B1021B /* MyActions.sks */; };
 		FF56AF9A1CF4C48600B1021B /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56AF991CF4C48600B1021B /* Bullet.swift */; };
 		FF61D1CE1CECCA0F00F82FF0 /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */; };
 		FF6D8F021CFF4A73006F76B7 /* GirderBig.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */; };
 		FF936A8E1CF3B44600059C65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF936A8D1CF3B44600059C65 /* Assets.xcassets */; };
+		FF9F09021D077108006187F5 /* Hearts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F09011D077108006187F5 /* Hearts.swift */; };
 		FFA143EA1D021C1C00893397 /* BigBot.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFA143E91D021C1C00893397 /* BigBot.sks */; };
 		FFA143EC1D021E1F00893397 /* BigBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA143EB1D021E1F00893397 /* BigBot.swift */; };
 		FFC5884D1CEBB2CF00F803AA /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC5884C1CEBB2CF00F803AA /* Hero.swift */; };
@@ -50,11 +52,13 @@
 		FF2BA23E1D0076FF00DCAE6C /* FuelGauge.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FuelGauge.sks; sourceTree = "<group>"; };
 		FF2BA2401D0078DA00DCAE6C /* FuelGauge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelGauge.swift; sourceTree = "<group>"; };
 		FF48B6CA1CFF7EA300D030A7 /* GirderLong.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GirderLong.sks; sourceTree = "<group>"; };
+		FF5052E61D0887FC00DD26A1 /* Hearts.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hearts.sks; sourceTree = "<group>"; };
 		FF56AF931CF4B5E300B1021B /* MyActions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyActions.sks; path = ../MyActions.sks; sourceTree = "<group>"; };
 		FF56AF991CF4C48600B1021B /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
 		FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GirderBig.sks; sourceTree = "<group>"; };
 		FF936A8D1CF3B44600059C65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF9F09011D077108006187F5 /* Hearts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hearts.swift; sourceTree = "<group>"; };
 		FFA143E91D021C1C00893397 /* BigBot.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BigBot.sks; sourceTree = "<group>"; };
 		FFA143EB1D021E1F00893397 /* BigBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigBot.swift; sourceTree = "<group>"; };
 		FFC5884C1CEBB2CF00F803AA /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
@@ -99,7 +103,9 @@
 				FF56AF931CF4B5E300B1021B /* MyActions.sks */,
 				FF0D1CA41CE269B40088A9D7 /* AppDelegate.swift */,
 				FF0D1CA61CE269B40088A9D7 /* GameScene.sks */,
+				FF5052E61D0887FC00DD26A1 /* Hearts.sks */,
 				FF0D1CA81CE269B40088A9D7 /* GameScene.swift */,
+				FF9F09011D077108006187F5 /* Hearts.swift */,
 				FF0D1CAA1CE269B40088A9D7 /* GameViewController.swift */,
 				FF0D1CAC1CE269B40088A9D7 /* Main.storyboard */,
 				FF0D1CB11CE269B40088A9D7 /* LaunchScreen.storyboard */,
@@ -187,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF48B6CB1CFF7EA300D030A7 /* GirderLong.sks in Resources */,
+				FF5052E71D0887FC00DD26A1 /* Hearts.sks in Resources */,
 				FFCE6A251D01D33A00B6CF67 /* FuelTank.sks in Resources */,
 				FF0D1CC51CE27DDA0088A9D7 /* Joystick.sks in Resources */,
 				FF6D8F021CFF4A73006F76B7 /* GirderBig.sks in Resources */,
@@ -213,6 +220,7 @@
 				FF0D1CBB1CE26E470088A9D7 /* Joystick.swift in Sources */,
 				FFDE653E1CF7940000EFCB78 /* GlowRing.swift in Sources */,
 				FFA143EC1D021E1F00893397 /* BigBot.swift in Sources */,
+				FF9F09021D077108006187F5 /* Hearts.swift in Sources */,
 				FF2BA2411D0078DA00DCAE6C /* FuelGauge.swift in Sources */,
 				FF0D1CAB1CE269B40088A9D7 /* GameViewController.swift in Sources */,
 				FF292DB81CEA56EE00518E62 /* SKUtils.swift in Sources */,

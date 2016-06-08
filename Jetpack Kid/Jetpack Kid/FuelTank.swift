@@ -54,10 +54,15 @@ class FuelTank:SKSpriteNode{
  
     }
     
+
+    
     func refuel() {
         if keeper.fuelLevel < 100 && refueling == true {
             keeper.fuelLevel = keeper.fuelLevel + 1
 
+        }
+        if keeper.fuelLevel >= 100 {
+            refueling = false
         }
         
     }

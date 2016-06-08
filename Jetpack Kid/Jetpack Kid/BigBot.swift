@@ -14,36 +14,57 @@ class BigBot:SKSpriteNode{
     
     var head:SKSpriteNode!
     var body:SKSpriteNode!
-    var walkFrames: [SKTexture] = []
+    var physBody: SKSpriteNode!
+    var walkFrames1: [SKTexture] = []
+    var walkFrames2: [SKTexture] = []
     var timer = NSTimer()
-
+    var _currentWalk:Int!
     
     func setUp(){
         head = childNodeWithName("head") as! SKSpriteNode
         body = childNodeWithName("body") as! SKSpriteNode
+        physBody = childNodeWithName("physBody") as! SKSpriteNode
+        _currentWalk = 1
         
-        for i in 1...24 {
-            walkFrames.append(SKTexture(imageNamed: "bigBotBody\(i)"))
+        for i in 1...12 {
+            walkFrames1.append(SKTexture(imageNamed: "bigBotBody\(i)"))
         }
         
-        physicsBody = SKPhysicsBody(texture: body.texture!, size: body.size)
+        for i in 13...24 {
+            walkFrames2.append(SKTexture(imageNamed: "bigBotBody\(i)"))
+        }
+
+        physicsBody = SKPhysicsBody(texture: physBody.texture!, size: physBody.size)
         physicsBody?.affectedByGravity = true
-        physicsBody?.mass = 1.0
+        physicsBody?.mass = 3000.0
         physicsBody?.allowsRotation = false
         physicsBody?.pinned = false
         physicsBody?.dynamic = true
-        physicsBody?.contactTestBitMask = PhysicsCategory.Hero
+        physicsBody?.friction = 1.0
         physicsBody?.categoryBitMask = PhysicsCategory.Robot
+        //physicsBody?.collisionBitMask = PhysicsCategory.Bullet | PhysicsCategory.Wall | PhysicsCategory.Ground | PhysicsCategory.Hero
+    
 
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(step), userInfo: nil, repeats: true)
-
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.75, target: self, selector: #selector(stepForward), userInfo: nil, repeats: true)
  
     }
     
-    func step(){
-        body.runAction(SKAction.animateWithTextures(walkFrames, timePerFrame: 0.03))
-        physicsBody?.velocity = CGVector(dx: -90, dy: 0)
+
+    func stepForward(){
+        /*
+        if _currentWalk == 1 {
+            body.runAction(SKAction.animateWithTextures(walkFrames1, timePerFrame: 0.0625))
+            _currentWalk = 2
+        }
+        if _currentWalk == 2 {
+            body.runAction(SKAction.animateWithTextures(walkFrames2, timePerFrame: 0.0625))
+            _currentWalk = 1
+        }
+ */
+        physicsBody?.velocity = CGVector(dx: -300, dy: 0)
     }
+    
+    
     
     
     

@@ -24,12 +24,14 @@ struct state {
 class Hero: SKSpriteNode {
     var _hero:SKSpriteNode!
     var _jetFire:SKSpriteNode!
+    var _physBody:SKSpriteNode!
     
     
     var _direction:Int!
     var grounded:Bool!
     var shooting:Bool!
     var shocking:Bool!
+    var jetOn: Bool!
     var _landingForce: CGFloat!
     var _currentState:Int!
     var _lastState:Int!
@@ -70,6 +72,7 @@ class Hero: SKSpriteNode {
 
         _hero = childNodeWithName("heroSprite") as! SKSpriteNode
         _jetFire = childNodeWithName("jetFireSprite") as! SKSpriteNode
+        _physBody = childNodeWithName("physBody") as! SKSpriteNode
         
         heroPos = _hero.anchorPoint
         
@@ -88,8 +91,10 @@ class Hero: SKSpriteNode {
         _turnFrame = 0
         grounded = false
         shooting = false
+        jetOn = false
   
-        physicsBody = SKPhysicsBody(rectangleOfSize: _hero.size)
+        //physicsBody = SKPhysicsBody(rectangleOfSize: _hero.size)
+        physicsBody = SKPhysicsBody(texture: _physBody.texture!, size: _physBody.size)
         physicsBody?.affectedByGravity = true
         physicsBody?.allowsRotation = false
         physicsBody?.mass = 0.5
@@ -197,7 +202,8 @@ class Hero: SKSpriteNode {
             shooting = true
             _hero.runAction(SKAction(named: "shootRight")!, completion: {self.shooting = false})
         }
-
+        
+ 
     }
     
     func step(){
@@ -205,6 +211,13 @@ class Hero: SKSpriteNode {
         _jetFire.texture = jetFireSpinFrames[_spinFrame]
         
         if _currentState == state.flying {
+            
+            if jetOn == true {
+                let rand:CGFloat = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+                _jetFire.alpha = 0.5 + rand
+                
+            }
+
             
             if !shooting{
                 if _direction == 1 && _spinFrame < 19 {
@@ -220,6 +233,8 @@ class Hero: SKSpriteNode {
                 _hero.texture = spinFrames[_spinFrame]
                 
             }
+            
+        
             
 
             
@@ -239,6 +254,13 @@ class Hero: SKSpriteNode {
                 _liftFrame = 26
                 changeState(state.flying)
             }
+            
+            if jetOn == true {
+                let rand:CGFloat = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+                _jetFire.alpha = 0.5 + rand
+                
+            }
+
         }
         
         if _currentState == state.landing {
