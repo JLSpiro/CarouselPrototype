@@ -37,7 +37,7 @@ class Bullet: SKSpriteNode{
         physicsBody?.pinned = false
         physicsBody?.restitution = 0.0
         physicsBody?.categoryBitMask = PhysicsCategory.Bullet
-        physicsBody?.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Robot
+      //  physicsBody?.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Robot
 
         
     }

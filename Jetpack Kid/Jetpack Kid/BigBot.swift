@@ -36,13 +36,14 @@ class BigBot:SKSpriteNode{
 
         physicsBody = SKPhysicsBody(texture: physBody.texture!, size: physBody.size)
         physicsBody?.affectedByGravity = true
-        physicsBody?.mass = 3000.0
+        physicsBody?.mass = 300.0
         physicsBody?.allowsRotation = false
         physicsBody?.pinned = false
         physicsBody?.dynamic = true
         physicsBody?.friction = 1.0
         physicsBody?.categoryBitMask = PhysicsCategory.Robot
-        //physicsBody?.collisionBitMask = PhysicsCategory.Bullet | PhysicsCategory.Wall | PhysicsCategory.Ground | PhysicsCategory.Hero
+        physicsBody?.collisionBitMask =  PhysicsCategory.Wall | PhysicsCategory.Ground | PhysicsCategory.Bullet
+        physicsBody?.contactTestBitMask = PhysicsCategory.Hero
     
 
         timer = NSTimer.scheduledTimerWithTimeInterval(0.75, target: self, selector: #selector(stepForward), userInfo: nil, repeats: true)

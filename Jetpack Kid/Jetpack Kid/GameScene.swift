@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         userInteractionEnabled = true
         
         physicsWorld.contactDelegate = self
-        view.showsPhysics = true
+        //view.showsPhysics = true
         
         cameraNode = childNodeWithName("CameraNode") as! SKCameraNode
         
@@ -244,6 +244,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             thisTank.turnOn()
              
         }
+        if collision == PhysicsCategory.Bullet | PhysicsCategory.Robot {
+            let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            let thisBullet = aBullet as! Bullet
+            thisBullet.removeBullet()
+        }
+
         
         if collision == PhysicsCategory.Bullet | PhysicsCategory.Wall {
             let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
@@ -253,13 +261,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             thisBullet.removeBullet()
         }
         
-        if collision == PhysicsCategory.Bullet | PhysicsCategory.Robot {
-            let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
-                contact.bodyA.node :
-                contact.bodyB.node
-            let thisBullet = aBullet as! Bullet
-            thisBullet.removeBullet()
-        }
 
 
     }

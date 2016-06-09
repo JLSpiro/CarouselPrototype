@@ -102,9 +102,9 @@
 			children = (
 				FF56AF931CF4B5E300B1021B /* MyActions.sks */,
 				FF0D1CA41CE269B40088A9D7 /* AppDelegate.swift */,
+				FF0D1CA81CE269B40088A9D7 /* GameScene.swift */,
 				FF0D1CA61CE269B40088A9D7 /* GameScene.sks */,
 				FF5052E61D0887FC00DD26A1 /* Hearts.sks */,
-				FF0D1CA81CE269B40088A9D7 /* GameScene.swift */,
 				FF9F09011D077108006187F5 /* Hearts.swift */,
 				FF0D1CAA1CE269B40088A9D7 /* GameViewController.swift */,
 				FF0D1CAC1CE269B40088A9D7 /* Main.storyboard */,
