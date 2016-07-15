@@ -25,7 +25,7 @@ class GlowRing: SKSpriteNode{
         _ring = SKSpriteNode(imageNamed: "glowRing")
         addChild(_ring)
         
-        _ring.setScale(0.7)
+        _ring.setScale(0.2)
         _ring.blendMode = SKBlendMode.Screen
         _ring.alpha = 0.7
         grow = 0.7
@@ -35,10 +35,10 @@ class GlowRing: SKSpriteNode{
     
     
     func fadeOut(){
-        grow  = grow * 1.02
+        grow  = grow * 1.15
         _ring.setScale(grow)
-        _ring.alpha = _ring.alpha - 0.08
-        if _ring.alpha <= 0 {
+        _ring.alpha = _ring.alpha - 0.1
+        if grow >= 4.0 {
             self.removeFromParent()
         }
     }

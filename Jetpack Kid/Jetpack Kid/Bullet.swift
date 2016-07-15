@@ -16,9 +16,11 @@ import SpriteKit
 class Bullet: SKSpriteNode{
     
     var _bullet: SKSpriteNode!
+    var detectionMade: Bool!
     
     func setUp(direction:Int){
         self.name = "bullet"
+        detectionMade = false
         _bullet = SKSpriteNode(imageNamed: "laser")
         addChild(_bullet)
         
@@ -37,14 +39,16 @@ class Bullet: SKSpriteNode{
         physicsBody?.pinned = false
         physicsBody?.restitution = 0.0
         physicsBody?.categoryBitMask = PhysicsCategory.Bullet
-      //  physicsBody?.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Robot
-
+        physicsBody?.collisionBitMask = PhysicsCategory.Wall | PhysicsCategory.Robot
+        
         
     }
     
     func removeBullet(){
         self.removeFromParent()
     }
+    
+    
 
     
 

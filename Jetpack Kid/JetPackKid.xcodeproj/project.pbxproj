@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF00CF861D0F4AF1007BBF9A /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF00CF851D0F4AF1007BBF9A /* Explosion.sks */; };
 		FF0D1CA51CE269B40088A9D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D1CA41CE269B40088A9D7 /* AppDelegate.swift */; };
 		FF0D1CA71CE269B40088A9D7 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF0D1CA61CE269B40088A9D7 /* GameScene.sks */; };
 		FF0D1CA91CE269B40088A9D7 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D1CA81CE269B40088A9D7 /* GameScene.swift */; };
@@ -23,21 +24,26 @@
 		FF56AF941CF4B5E300B1021B /* MyActions.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF56AF931CF4B5E300B1021B /* MyActions.sks */; };
 		FF56AF9A1CF4C48600B1021B /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF56AF991CF4C48600B1021B /* Bullet.swift */; };
 		FF61D1CE1CECCA0F00F82FF0 /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */; };
+		FF6C9C151D0B4CF0001016DE /* Wall.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF6C9C141D0B4CF0001016DE /* Wall.sks */; };
 		FF6D8F021CFF4A73006F76B7 /* GirderBig.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */; };
 		FF936A8E1CF3B44600059C65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF936A8D1CF3B44600059C65 /* Assets.xcassets */; };
 		FF9F09021D077108006187F5 /* Hearts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9F09011D077108006187F5 /* Hearts.swift */; };
 		FFA143EA1D021C1C00893397 /* BigBot.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFA143E91D021C1C00893397 /* BigBot.sks */; };
 		FFA143EC1D021E1F00893397 /* BigBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA143EB1D021E1F00893397 /* BigBot.swift */; };
+		FFA22DB51D0F2E8F0005D635 /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFA22DB31D0F2E8E0005D635 /* Smoke.sks */; };
+		FFA22DB61D0F2E8F0005D635 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = FFA22DB41D0F2E8F0005D635 /* spark.png */; };
 		FFC5884D1CEBB2CF00F803AA /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC5884C1CEBB2CF00F803AA /* Hero.swift */; };
 		FFCE6A251D01D33A00B6CF67 /* FuelTank.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFCE6A241D01D33A00B6CF67 /* FuelTank.sks */; };
 		FFCE6A271D01D3DD00B6CF67 /* FuelTank.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCE6A261D01D3DD00B6CF67 /* FuelTank.swift */; };
 		FFCE6A291D01F14E00B6CF67 /* SharedKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCE6A281D01F14E00B6CF67 /* SharedKeeper.swift */; };
+		FFD0E9D71D0F1FD1007E5374 /* Wall.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD0E9D61D0F1FD1007E5374 /* Wall.swift */; };
 		FFD278D81CF3916600286FD3 /* Trigger.sks in Resources */ = {isa = PBXBuildFile; fileRef = FFD278D71CF3916600286FD3 /* Trigger.sks */; };
 		FFD278DA1CF3923200286FD3 /* Trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD278D91CF3923200286FD3 /* Trigger.swift */; };
 		FFDE653E1CF7940000EFCB78 /* GlowRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDE653D1CF7940000EFCB78 /* GlowRing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF00CF851D0F4AF1007BBF9A /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Explosion.sks; path = ../Explosion.sks; sourceTree = "<group>"; };
 		FF0D1CA11CE269B40088A9D7 /* JetPackKid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JetPackKid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF0D1CA41CE269B40088A9D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF0D1CA61CE269B40088A9D7 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -56,15 +62,19 @@
 		FF56AF931CF4B5E300B1021B /* MyActions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MyActions.sks; path = ../MyActions.sks; sourceTree = "<group>"; };
 		FF56AF991CF4C48600B1021B /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
+		FF6C9C141D0B4CF0001016DE /* Wall.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Wall.sks; sourceTree = "<group>"; };
 		FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GirderBig.sks; sourceTree = "<group>"; };
 		FF936A8D1CF3B44600059C65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF9F09011D077108006187F5 /* Hearts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hearts.swift; sourceTree = "<group>"; };
 		FFA143E91D021C1C00893397 /* BigBot.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BigBot.sks; sourceTree = "<group>"; };
 		FFA143EB1D021E1F00893397 /* BigBot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigBot.swift; sourceTree = "<group>"; };
+		FFA22DB31D0F2E8E0005D635 /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Smoke.sks; path = ../Smoke.sks; sourceTree = "<group>"; };
+		FFA22DB41D0F2E8F0005D635 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = ../spark.png; sourceTree = "<group>"; };
 		FFC5884C1CEBB2CF00F803AA /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
 		FFCE6A241D01D33A00B6CF67 /* FuelTank.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FuelTank.sks; sourceTree = "<group>"; };
 		FFCE6A261D01D3DD00B6CF67 /* FuelTank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FuelTank.swift; sourceTree = "<group>"; };
 		FFCE6A281D01F14E00B6CF67 /* SharedKeeper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedKeeper.swift; sourceTree = "<group>"; };
+		FFD0E9D61D0F1FD1007E5374 /* Wall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wall.swift; sourceTree = "<group>"; };
 		FFD278D71CF3916600286FD3 /* Trigger.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Trigger.sks; sourceTree = "<group>"; };
 		FFD278D91CF3923200286FD3 /* Trigger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigger.swift; sourceTree = "<group>"; };
 		FFDE653D1CF7940000EFCB78 /* GlowRing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlowRing.swift; sourceTree = "<group>"; };
@@ -100,38 +110,75 @@
 		FF0D1CA31CE269B40088A9D7 /* JetPackKid */ = {
 			isa = PBXGroup;
 			children = (
+				FFEDC3231D1308C500B73373 /* Scenes */,
+				FF2620B41D11A10F00EFD018 /* Objects */,
+				FF2620B31D11A0DE00EFD018 /* Effects */,
+				FF2620B21D11A09000EFD018 /* Instruments */,
 				FF56AF931CF4B5E300B1021B /* MyActions.sks */,
 				FF0D1CA41CE269B40088A9D7 /* AppDelegate.swift */,
-				FF0D1CA81CE269B40088A9D7 /* GameScene.swift */,
-				FF0D1CA61CE269B40088A9D7 /* GameScene.sks */,
-				FF5052E61D0887FC00DD26A1 /* Hearts.sks */,
-				FF9F09011D077108006187F5 /* Hearts.swift */,
 				FF0D1CAA1CE269B40088A9D7 /* GameViewController.swift */,
 				FF0D1CAC1CE269B40088A9D7 /* Main.storyboard */,
 				FF0D1CB11CE269B40088A9D7 /* LaunchScreen.storyboard */,
 				FF936A8D1CF3B44600059C65 /* Assets.xcassets */,
-				FFA143E91D021C1C00893397 /* BigBot.sks */,
-				FFA143EB1D021E1F00893397 /* BigBot.swift */,
 				FF0D1CB41CE269B40088A9D7 /* Info.plist */,
-				FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */,
-				FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */,
-				FFD278D91CF3923200286FD3 /* Trigger.swift */,
-				FFD278D71CF3916600286FD3 /* Trigger.sks */,
 				FF292DB71CEA56EE00518E62 /* SKUtils.swift */,
-				FF56AF991CF4C48600B1021B /* Bullet.swift */,
-				FFDE653D1CF7940000EFCB78 /* GlowRing.swift */,
 				FFCE6A281D01F14E00B6CF67 /* SharedKeeper.swift */,
-				FFCE6A261D01D3DD00B6CF67 /* FuelTank.swift */,
-				FFCE6A241D01D33A00B6CF67 /* FuelTank.sks */,
-				FFC5884C1CEBB2CF00F803AA /* Hero.swift */,
-				FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */,
-				FF2BA2401D0078DA00DCAE6C /* FuelGauge.swift */,
-				FF2BA23E1D0076FF00DCAE6C /* FuelGauge.sks */,
-				FF48B6CA1CFF7EA300D030A7 /* GirderLong.sks */,
-				FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */,
 			);
 			name = JetPackKid;
 			path = "Jetpack Kid";
+			sourceTree = "<group>";
+		};
+		FF2620B21D11A09000EFD018 /* Instruments */ = {
+			isa = PBXGroup;
+			children = (
+				FFD278D91CF3923200286FD3 /* Trigger.swift */,
+				FFD278D71CF3916600286FD3 /* Trigger.sks */,
+				FF2BA23E1D0076FF00DCAE6C /* FuelGauge.sks */,
+				FF0D1CBA1CE26E470088A9D7 /* Joystick.swift */,
+				FF0D1CC41CE27DDA0088A9D7 /* Joystick.sks */,
+				FF2BA2401D0078DA00DCAE6C /* FuelGauge.swift */,
+				FF9F09011D077108006187F5 /* Hearts.swift */,
+				FF5052E61D0887FC00DD26A1 /* Hearts.sks */,
+			);
+			name = Instruments;
+			sourceTree = "<group>";
+		};
+		FF2620B31D11A0DE00EFD018 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				FF00CF851D0F4AF1007BBF9A /* Explosion.sks */,
+				FFA22DB41D0F2E8F0005D635 /* spark.png */,
+				FFA22DB31D0F2E8E0005D635 /* Smoke.sks */,
+			);
+			name = Effects;
+			sourceTree = "<group>";
+		};
+		FF2620B41D11A10F00EFD018 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				FFC5884C1CEBB2CF00F803AA /* Hero.swift */,
+				FF61D1CD1CECCA0F00F82FF0 /* Hero.sks */,
+				FF56AF991CF4C48600B1021B /* Bullet.swift */,
+				FFDE653D1CF7940000EFCB78 /* GlowRing.swift */,
+				FFA143E91D021C1C00893397 /* BigBot.sks */,
+				FFA143EB1D021E1F00893397 /* BigBot.swift */,
+				FFD0E9D61D0F1FD1007E5374 /* Wall.swift */,
+				FF6C9C141D0B4CF0001016DE /* Wall.sks */,
+				FF48B6CA1CFF7EA300D030A7 /* GirderLong.sks */,
+				FF6D8F011CFF4A73006F76B7 /* GirderBig.sks */,
+				FFCE6A241D01D33A00B6CF67 /* FuelTank.sks */,
+				FFCE6A261D01D3DD00B6CF67 /* FuelTank.swift */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		FFEDC3231D1308C500B73373 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				FF0D1CA81CE269B40088A9D7 /* GameScene.swift */,
+				FF0D1CA61CE269B40088A9D7 /* GameScene.sks */,
+			);
+			name = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,9 +242,11 @@
 				FF48B6CB1CFF7EA300D030A7 /* GirderLong.sks in Resources */,
 				FF5052E71D0887FC00DD26A1 /* Hearts.sks in Resources */,
 				FFCE6A251D01D33A00B6CF67 /* FuelTank.sks in Resources */,
+				FF6C9C151D0B4CF0001016DE /* Wall.sks in Resources */,
 				FF0D1CC51CE27DDA0088A9D7 /* Joystick.sks in Resources */,
 				FF6D8F021CFF4A73006F76B7 /* GirderBig.sks in Resources */,
 				FF0D1CA71CE269B40088A9D7 /* GameScene.sks in Resources */,
+				FFA22DB51D0F2E8F0005D635 /* Smoke.sks in Resources */,
 				FFD278D81CF3916600286FD3 /* Trigger.sks in Resources */,
 				FF2BA23F1D0076FF00DCAE6C /* FuelGauge.sks in Resources */,
 				FF56AF941CF4B5E300B1021B /* MyActions.sks in Resources */,
@@ -206,6 +255,8 @@
 				FFA143EA1D021C1C00893397 /* BigBot.sks in Resources */,
 				FF61D1CE1CECCA0F00F82FF0 /* Hero.sks in Resources */,
 				FF0D1CAE1CE269B40088A9D7 /* Main.storyboard in Resources */,
+				FFA22DB61D0F2E8F0005D635 /* spark.png in Resources */,
+				FF00CF861D0F4AF1007BBF9A /* Explosion.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +274,7 @@
 				FF9F09021D077108006187F5 /* Hearts.swift in Sources */,
 				FF2BA2411D0078DA00DCAE6C /* FuelGauge.swift in Sources */,
 				FF0D1CAB1CE269B40088A9D7 /* GameViewController.swift in Sources */,
+				FFD0E9D71D0F1FD1007E5374 /* Wall.swift in Sources */,
 				FF292DB81CEA56EE00518E62 /* SKUtils.swift in Sources */,
 				FFD278DA1CF3923200286FD3 /* Trigger.swift in Sources */,
 				FFCE6A291D01F14E00B6CF67 /* SharedKeeper.swift in Sources */,

@@ -23,7 +23,7 @@ class Trigger: SKSpriteNode {
         _isTouchingTrigger = false
         _triggerRadius = trigger.size.width * 0.4;
         _triggerRadiusSquared = pow(_triggerRadius,2);
-   //     userInteractionEnabled = true
+       // userInteractionEnabled = true
         
  
         
@@ -35,8 +35,7 @@ class Trigger: SKSpriteNode {
         for touch in touches {
             if  isTouchingTrigger(touch) == true {
                 
-            //   print("BANG")
-                
+               print("BANG")
   
             }
             

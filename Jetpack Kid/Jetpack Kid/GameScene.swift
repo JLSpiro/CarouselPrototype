@@ -34,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hero:Hero!
     var prevDirection: Int!
     var joyStickPos: CGPoint!
+    var bulletsToRemove: NSMutableArray!
     
 
     
@@ -41,7 +42,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         userInteractionEnabled = true
         
         physicsWorld.contactDelegate = self
-        //view.showsPhysics = true
+       // view.showsPhysics = true
         
         cameraNode = childNodeWithName("CameraNode") as! SKCameraNode
         
@@ -67,7 +68,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hearts.setUp()
         hearts.setLives()
         
-
+        bulletsToRemove = []
         
         enumerateChildNodesWithName("//fuelTankNode") {node, _ in
             let aTank = node as! FuelTank
@@ -77,8 +78,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enumerateChildNodesWithName("//bigBotNode") {node, _ in
             let aBot = node as! BigBot
             aBot.setUp()
+        }
+        
+        enumerateChildNodesWithName("//wallNode") {node, _ in
+            let aWall = node as! Wall
+            aWall.setUp()
             
         }
+
 
     }
  
@@ -87,6 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        /* Called when a touch begins */
         for touch in touches {
             if trigger.isTouchingTrigger(touch) == true {
+                print("shoot")
                 shoot()
             }
         }
@@ -94,11 +102,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      }
    
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
-     //   print("\(joyStick.jetVector.dy)")
         cameraNode.position = convertPoint(hero.heroPos, fromNode: hero)
         fuelGauge.setLevel()
-          
+        
+        
+        
+        
+        /*
+ 
         enumerateChildNodesWithName("bullet") {node, _ in
             let aBullet = node as! Bullet
             let aRing = GlowRing()
@@ -106,8 +117,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             aRing.position = aBullet.position
             self.addChild(aRing)
             
-            
         }
+ */
+        
+        enumerateChildNodesWithName("//bigBotNode") {node, _ in
+            let aBot = node as! BigBot
+            let botPos:CGPoint = self.convertPoint(CGPointZero, fromNode: aBot)
+            let heroPos:CGPoint = self.convertPoint(CGPointZero, fromNode: self.hero)
+            if botPos.x < heroPos.x {
+                aBot.turnHead(1)
+            }
+            if botPos.x > heroPos.x {
+                aBot.turnHead(0)
+            }
+        
+        }
+ 
         
         prevDirection = hero._direction
         if hero._currentState == state.flying{
@@ -174,13 +199,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     
     func shoot(){
-        
+     
+        print("func shoot")
  
         if hero._currentState == state.flying {
             hero.shootFlying()
         }
-        
-      //  let bullet:SKSpriteNode = SKSpriteNode(imageNamed: "laser")
+   
         let bullet:Bullet = Bullet()
         bullet.setUp(hero._direction)
         bullet.setScale(0.7)
@@ -193,18 +218,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bullet.position = convertPoint(hero.shootRPos, fromNode: hero)
         }
 
-        
-       // bullet.position = convertPoint(hero.heroPos, fromNode: hero)
-        
         bullet.zPosition = 2
         addChild(bullet)
         
         if hero._direction == 0{
             
-            bullet.physicsBody?.applyForce(CGVector(dx: -25000, dy: 0))
+            bullet.physicsBody?.applyForce(CGVector(dx: -20000, dy: 0))
         }
         if hero._direction == 1{
-            bullet.physicsBody?.applyForce(CGVector(dx: 25000, dy: 0))
+            bullet.physicsBody?.applyForce(CGVector(dx: 20000, dy: 0))
         }
 
 
@@ -244,22 +266,88 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             thisTank.turnOn()
              
         }
+
         if collision == PhysicsCategory.Bullet | PhysicsCategory.Robot {
             let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
                 contact.bodyA.node :
                 contact.bodyB.node
             let thisBullet = aBullet as! Bullet
-            thisBullet.removeBullet()
+            explode(thisBullet.position)
+            
+            if thisBullet.detectionMade == false{
+                thisBullet.detectionMade = true
+                explode(thisBullet.position)
+                removeBullet(thisBullet)
+                
+            }
+         
         }
-
         
+
         if collision == PhysicsCategory.Bullet | PhysicsCategory.Wall {
             let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
                 contact.bodyA.node :
                 contact.bodyB.node
             let thisBullet = aBullet as! Bullet
-            thisBullet.removeBullet()
+            
+            if thisBullet.detectionMade == false{
+                thisBullet.detectionMade = true
+                explode(thisBullet.position)
+                removeBullet(thisBullet)
+                
+            }
         }
+        
+        if collision == PhysicsCategory.Bullet | PhysicsCategory.Hero {
+            let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            let thisBullet = aBullet as! Bullet
+            if thisBullet.detectionMade == false{
+                thisBullet.detectionMade = true
+                explode(thisBullet.position)
+                removeBullet(thisBullet)
+                
+            }
+            
+        }
+        
+        
+        
+        
+        if collision == PhysicsCategory.Bullet | PhysicsCategory.Target {
+            let aBullet = (contact.bodyA.categoryBitMask == PhysicsCategory.Bullet) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            let thisBullet = aBullet as! Bullet
+            if thisBullet.detectionMade == false{
+                thisBullet.detectionMade = true
+                explode(thisBullet.position)
+                // bulletsToRemove.addObject(thisBullet)
+               removeBullet(thisBullet)
+                
+            }
+            
+            let aTarget = (contact.bodyA.categoryBitMask == PhysicsCategory.Target) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            let aRobot = aTarget?.parent as! BigBot
+            
+            aRobot.blowUp()
+            
+            
+        }
+
+        
+        if collision == PhysicsCategory.Robot | PhysicsCategory.Wall {
+            let aRobot = (contact.bodyA.categoryBitMask == PhysicsCategory.Robot) ?
+                contact.bodyA.node :
+                contact.bodyB.node
+            let thisRobot = aRobot as! BigBot
+            thisRobot.reverse()
+            
+        }
+
         
 
 
@@ -272,25 +360,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             hero.grounded = false
             
         }
-/*
-        if collision == PhysicsCategory.Hero | PhysicsCategory.FuelTank {
-            let aTank = (contact.bodyA.categoryBitMask == PhysicsCategory.FuelTank) ?
-                contact.bodyA.node :
-                contact.bodyB.node
-            let thisTank = aTank as! FuelTank
-            if refueling == true {
-                refueling = false
-                thisTank.turnOff()
-            }
-            
-        }
-*/
-        
+       
  
     }
     
+    func explode(pos:CGPoint){
+        let explosion:SKEmitterNode = SKEmitterNode(fileNamed: "Explosion")!
+        explosion.position = pos
+        addChild(explosion)
+        let endAction = SKAction.sequence([SKAction.waitForDuration(0.5), SKAction.removeFromParent()])
+        explosion.runAction(endAction)
+  
+    }
     
-    
-
+    func removeBullet(bullet:Bullet){
+        bullet.removeFromParent()
+    }
 }
 

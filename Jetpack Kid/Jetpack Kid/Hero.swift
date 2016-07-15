@@ -97,17 +97,16 @@ class Hero: SKSpriteNode {
         physicsBody = SKPhysicsBody(texture: _physBody.texture!, size: _physBody.size)
         physicsBody?.affectedByGravity = true
         physicsBody?.allowsRotation = false
-        physicsBody?.mass = 0.5
+        physicsBody?.mass = 1.0
         
         physicsBody?.friction = 1.0
         physicsBody?.dynamic = true
         physicsBody?.pinned = false
         physicsBody?.restitution = 0.0
         physicsBody?.categoryBitMask = PhysicsCategory.Hero
-        physicsBody?.collisionBitMask = PhysicsCategory.Ground | PhysicsCategory.Wall
+        physicsBody?.collisionBitMask = PhysicsCategory.Ground | PhysicsCategory.Wall | PhysicsCategory.Bullet | PhysicsCategory.Robot
+    
         
-        
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.04, target: self, selector: #selector(step), userInfo: nil, repeats: true)
         
         //set up animations
         
@@ -182,8 +181,10 @@ class Hero: SKSpriteNode {
         turnRightAFrames = turnLeftAFrames.reverse()
         turnRightBFrames = turnLeftBFrames.reverse()
 
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.04, target: self, selector: #selector(step), userInfo: nil, repeats: true)
+        
 
- 
     }
     
     func changeState(newState:Int){
@@ -192,7 +193,7 @@ class Hero: SKSpriteNode {
     }
     
     func shootFlying(){
-        
+       
         if _spinFrame == 0 {
             shooting = true
 
