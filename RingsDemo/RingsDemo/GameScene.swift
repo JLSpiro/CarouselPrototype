@@ -11,10 +11,20 @@ import SpriteKit
 class GameScene: SKScene {
     
     var rider: Rider!
-    var brass: SKSpriteNode!
     var red: SKSpriteNode!
     var wheel: SKSpriteNode!
+    var ringArray: NSMutableArray!
+    var ring0: SKSpriteNode!
+    var ring1: SKSpriteNode!
+    var ring2: SKSpriteNode!
+    var ring3: SKSpriteNode!
+    var ringPos0: CGPoint!
+    var ringPos1: CGPoint!
+    var ringPos2: CGPoint!
+    var ringPos3: CGPoint!
     
+    var currentRing: SKSpriteNode!
+
     var caught: Bool!
     
     override func didMoveToView(view: SKView) {
@@ -24,7 +34,19 @@ class GameScene: SKScene {
         
         rider.zPosition = 3
         
-        brass = childNodeWithName("brass") as! SKSpriteNode
+        ring0 = childNodeWithName("ring0") as! SKSpriteNode
+        ring1 = childNodeWithName("ring1") as! SKSpriteNode
+        ring2 = childNodeWithName("ring2") as! SKSpriteNode
+        ring3 = childNodeWithName("ring3") as! SKSpriteNode
+        
+        ringPos0 = ring0.position
+        ringPos1 = ring1.position
+        ringPos2 = ring2.position
+        ringPos3 = ring3.position
+        
+        
+        ringArray = [ring0,ring1,ring2,ring3]
+        currentRing = ringArray.objectAtIndex(0) as! SKSpriteNode
         
         wheel = childNodeWithName("wheel") as! SKSpriteNode
         
@@ -33,6 +55,7 @@ class GameScene: SKScene {
     
         caught = false
         
+ 
      
     }
     
@@ -52,14 +75,43 @@ class GameScene: SKScene {
             if red.containsPoint(torsoPos){
                 print ("got it!!")
                 caught = true
-                brass.runAction(SKAction.sequence([SKAction.scaleBy(0.3, duration: 0.5), SKAction.waitForDuration(1.0), SKAction.scaleBy(0.01, duration: 1), SKAction.removeFromParent()]))
+                currentRing.runAction(SKAction.sequence([SKAction.scaleTo(0.0, duration: 0.5), SKAction.runBlock(dropRings), SKAction.waitForDuration(0.1), SKAction.runBlock(unCaught)]))
             }
 
         }
         if caught == true {
-            brass.position = torsoPos
+            currentRing.position = torsoPos
+   
             
         }
         
     }
+    
+    func unCaught(){
+        caught = false
+        currentRing = ringArray.objectAtIndex(0) as! SKSpriteNode
+        currentRing.position = ringPos3
+        currentRing.runAction(SKAction.scaleTo(0.68, duration: 0.5))
+        
+        ringArray.removeObjectAtIndex(0)
+        ringArray.addObject(currentRing)
+        
+        currentRing = ringArray.objectAtIndex(0) as! SKSpriteNode
+     
+        
+    }
+    
+    func dropRings(){
+        let secondRing: SKSpriteNode = ringArray.objectAtIndex(1) as! SKSpriteNode
+        let thirdRing: SKSpriteNode = ringArray.objectAtIndex(2) as! SKSpriteNode
+        let fourthRing: SKSpriteNode = ringArray.objectAtIndex(3) as! SKSpriteNode
+        
+        secondRing.runAction(SKAction.moveTo(ringPos0, duration: 0.5))
+        thirdRing.runAction(SKAction.moveTo(ringPos1, duration: 0.5))
+        fourthRing.runAction(SKAction.moveTo(ringPos2, duration: 0.5))
+
+        
+    }
+
+
 }
